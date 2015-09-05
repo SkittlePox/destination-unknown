@@ -7,7 +7,7 @@ public class room {
     String roomName;
     int roomNum, timesVisited = 0;
 
-    public room(int rnum, String rname) {   //Initializer
+    public room(int rnum, String rname) {   //Initializer, assigns a room name and number
         roomNum = rnum;
         roomName = rname;
     }

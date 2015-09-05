@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class player {
     String name;
     ArrayList<Integer> items = new ArrayList<Integer>();
+    int currentRoom = 0;
 
     public player(String pName) {
         name = pName;
@@ -20,6 +21,8 @@ public class player {
     public ArrayList getItems() {
         return items;
     }
+
+    public int getRoom() {return currentRoom;}
 
     public String getName() {
         return name;

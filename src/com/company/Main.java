@@ -7,15 +7,17 @@ import java.util.Scanner;
 
 public class Main {
 
-    Scanner scan = new Scanner(System.in);  //Scanner for taking input from the console
+    static Scanner scan = new Scanner(System.in);  //Scanner for taking input from the console
 
     public static HashMap<Integer, String> itemMap = new HashMap(); //Basically im setting integers that represent items to their corresponding item name (String)
     static ArrayList<String> fileRead = new ArrayList<String>();    //Assists in reading the file - an arrayList that holds the room data
     static String[][] roomData; //A 2d array where [room number][room data (including directional movements, room name, etc.)]
     static room[] rooms;    //An array of our room objects. See room.java.
 
+    static player john;
+
     public static void main(String[] args) throws IOException {
-        FileReader in = new FileReader("/Users/Benjamin/MTG/Java/Destination_Unknown/src/com/company/mapread.csv"); //we need to fix this, right now it links a txt file that's specific to my filesystem
+        FileReader in = new FileReader(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath()+ "com/company/mapread.csv"); //we need to fix this, right now it links a txt file that's specific to my filesystem
         BufferedReader br = new BufferedReader(in); //Its complicated to read a file and this is one of the components involved
         String bre = br.readLine(); //Another component
         while (bre != null) {   //fills the arrayList with room data
@@ -31,6 +33,16 @@ public class Main {
 
         listRooms();
 
+        System.out.println("Welcome bby\nWhat's ur name?");
+        john = new player(scan.nextLine()); //
+    }
+
+    static void parse() {
+        update();
+    }
+
+    static void update() {
+        System.out.println("You are in " + rooms[john.getRoom()].getRoomName());
     }
 
     static void popRooms() {    //Populates roomData and rooms with info from the text file
