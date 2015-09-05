@@ -19,7 +19,30 @@ public class player {
         switch(someDir) {
             case "n":
             case "north":
-
+                warpTo(Main.rooms[currentRoom].getDirs(0));
+                break;
+            case "s":
+            case "south":
+                warpTo(Main.rooms[currentRoom].getDirs(1));
+                break;
+            case "e":
+            case "east":
+                warpTo(Main.rooms[currentRoom].getDirs(2));
+                break;
+            case "w":
+            case "west":
+                warpTo(Main.rooms[currentRoom].getDirs(3));
+                break;
+            case "u":
+            case "up":
+                warpTo(Main.rooms[currentRoom].getDirs(4));
+                break;
+            case "d":
+            case "down":
+                warpTo(Main.rooms[currentRoom].getDirs(5));
+                break;
+            default:
+                System.out.println("nope");
                 break;
         }
     }

@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46c782c6-1827-4cdc-b321-570a542644c7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Destination_Unknown/com/company/Main.class" afterPath="$PROJECT_DIR$/out/production/Destination_Unknown/com/company/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Destination_Unknown/com/company/player.class" afterPath="$PROJECT_DIR$/out/production/Destination_Unknown/com/company/player.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Destination_Unknown/com/company/room.class" afterPath="$PROJECT_DIR$/out/production/Destination_Unknown/com/company/room.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/company/Main.java" afterPath="$PROJECT_DIR$/src/com/company/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/company/mapread.csv" afterPath="$PROJECT_DIR$/src/com/company/mapread.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/company/player.java" afterPath="$PROJECT_DIR$/src/com/company/player.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/company/room.java" afterPath="$PROJECT_DIR$/src/com/company/room.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Destination_Unknown.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,8 +28,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7075209">
-              <caret line="72" column="116" selection-start-line="72" selection-start-column="116" selection-end-line="72" selection-end-column="116" />
+            <state vertical-scroll-proportion="0.47771588">
+              <caret line="61" column="22" selection-start-line="61" selection-start-column="22" selection-end-line="61" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#554#562#0" expanded="true" />
@@ -62,7 +55,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/company/player.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+              <caret line="45" column="22" selection-start-line="45" selection-start-column="22" selection-end-line="45" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -99,10 +92,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/com/company/mapread.txt" />
-        <option value="$PROJECT_DIR$/src/com/company/player.java" />
         <option value="$PROJECT_DIR$/src/com/company/mapread.csv" />
-        <option value="$PROJECT_DIR$/src/com/company/Main.java" />
         <option value="$PROJECT_DIR$/src/com/company/room.java" />
+        <option value="$PROJECT_DIR$/src/com/company/player.java" />
+        <option value="$PROJECT_DIR$/src/com/company/Main.java" />
       </list>
     </option>
   </component>
@@ -473,7 +466,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/company/player.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <caret line="45" column="22" selection-start-line="45" selection-start-column="22" selection-end-line="45" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -491,8 +484,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7075209">
-          <caret line="72" column="116" selection-start-line="72" selection-start-column="116" selection-end-line="72" selection-end-column="116" />
+        <state vertical-scroll-proportion="0.47771588">
+          <caret line="61" column="22" selection-start-line="61" selection-start-column="22" selection-end-line="61" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#554#562#0" expanded="true" />

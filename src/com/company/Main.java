@@ -54,6 +54,12 @@ public class Main {
                 System.out.println("To navigate this world, you may move in 6 directions:\nnorth\nsouth\neast\nwest\nup\ndown");
                 System.out.println("You may type 'north', 'n', 'go north', 'go n' to go north for example");
                 break;
+            case "go":
+                john.goTo(parsedCommand[1]);
+                break;
+            default:
+                john.goTo(parsedCommand[0]);
+                break;
         }
     }
 
