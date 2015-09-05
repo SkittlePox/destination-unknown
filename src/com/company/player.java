@@ -15,7 +15,7 @@ public class player {
         items.add(item);
     }
 
-    public void goTo(String someDir) {
+    public void goTo(String someDir) {  //From the direction name to the destination room number
         switch(someDir) {
             case "n":
             case "north":
@@ -47,7 +47,7 @@ public class player {
         }
     }
 
-    public void warpTo(int destinationRoom) {
+    public void warpTo(int destinationRoom) {   //Does the actual moving
         currentRoom = destinationRoom;
         Main.rooms[destinationRoom].visit();
     }

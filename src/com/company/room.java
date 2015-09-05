@@ -5,7 +5,7 @@ package com.company;
  */
 public class room {
     int roomNum, timesVisited = 0;
-    int[] directions = new int[6];
+    int[] directions = new int[6];  //Each int in this array = a room number to travel to
 
     public room(int rnum, int[] sentDirs) {   //Initializer, assigns a room name and number
         roomNum = rnum;

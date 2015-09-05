@@ -55,7 +55,7 @@ public class Main {
                 System.out.println("You may type 'north', 'n', 'go north', 'go n' to go north for example");
                 break;
             case "go":
-                john.goTo(parsedCommand[1]);
+                john.goTo(parsedCommand[1]);    //parsedCommand[x] is a String that will be a direction (ie: north) that is sent to player.goTo() for translating into a destination room number
                 break;
             default:
                 john.goTo(parsedCommand[0]);
@@ -77,13 +77,13 @@ public class Main {
                 subDir[b]= Integer.valueOf(roomData[i][b+2]);
             }
             rooms[i] = new room(Integer.parseInt(roomData[i][0]), subDir);  //Creates a new room with the given data
-            roomMap.put(Integer.parseInt(roomData[i][0]), roomData[i][1]);
+            roomMap.put(Integer.parseInt(roomData[i][0]), roomData[i][1]);  //Inputs data into the HashMap roomMap
         }
     }
 
     static void listRooms() {   //Lists the rooms
         for (int i = 0; i != roomMap.size(); i++) {
-            System.out.println(i + " " + roomMap.get(i));
+            System.out.println(i + " " + roomMap.get(i));   //Testing out the functionality of the HashMap roomMap
         }
     }
 }
