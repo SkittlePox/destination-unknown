@@ -1,8 +1,6 @@
 package com.company;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -36,10 +34,10 @@ public class Main {
 
         System.out.println("You are in a destination unknown\nSurrounded by on open field you wake up wearing nothing but leather pants and a tunic\nType 'syntax' for the command syntax");
 
-        while (true) {
+        while (true) {  //Runs parse() and update() until quit
             update();
             parse();
-        }    //Runs parse() and update() until quit
+        }
     }
 
     static void parse() {   //The body of the UI
@@ -91,7 +89,8 @@ public class Main {
         System.out.print(itemFile.nextLine());   //finishes off first line of csv
         for (int i = 0; i != lines; i++) {
             itemData[i] = itemFile.nextLine().split("[,]");
-            items[i] = new item(new int[]{Integer.valueOf(itemData[i][2]), Integer.valueOf(itemData[i][3]), Integer.valueOf(itemData[i][4])});
+            items[i] = new item(new int[]{Integer.valueOf(itemData[i][2]), Integer.valueOf(itemData[i][3]), Integer.valueOf(itemData[i][4])});  //Creates a new item with the given data
+            itemMap.put(Integer.parseInt(itemData[i][0]), itemData[i][1]);  //Inputs data into the HashMap itemMap
         }
     }
 
