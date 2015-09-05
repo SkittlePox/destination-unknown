@@ -10,11 +10,13 @@ public class Main {
 
     static Scanner scan = new Scanner(System.in);  //Scanner for taking input from the console
     static Scanner mapFile;
+    static Scanner itemFile;
 
     public static HashMap<Integer, String> itemMap = new HashMap(); //Basically im setting integers that represent items to their corresponding item name (String)
     public static HashMap<Integer, String> roomMap = new HashMap(); //Same thing but for the rooms
 
     static String[][] roomData; //A 2d array where [room number][room data (including directional movements, room name, etc.)]
+    static String[][] itemData;
     static room[] rooms;    //An array of our room objects. See room.java.
     static item[] items;    //An array of item object.
 
@@ -23,12 +25,12 @@ public class Main {
     static String input;
     static String[] parsedCommand;
 
-    static int[][] itemInfo;
-
     public static void main(String[] args) throws IOException {
         mapFile = new Scanner(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/mapread.csv"));
+        itemFile = new Scanner(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/itemread.csv"));
 
         popRooms();
+        popItems();
 
         //listRooms();
 
@@ -64,10 +66,6 @@ public class Main {
         System.out.println(roomMap.get(john.getRoomNum())); //Retrieves the name of the room given the room number and prints it
     }
 
-    static void popItems() {
-
-    }
-
     static void popRooms() {
         int lines = mapFile.nextInt();
         roomData = new String[lines][];   //This and rooms will hold room data
@@ -78,10 +76,22 @@ public class Main {
             roomData[i] = mapFile.nextLine().split("[,]");
             int[] subDir = new int[6];  //subDir contains the direction information for each room that is sent to each room
             for (int b = 0; b < 6; b++) {
-                subDir[b] = Integer.valueOf(roomData[i][b+2]);
+                subDir[b] = Integer.valueOf(roomData[i][b + 2]);
             }
             rooms[i] = new room(Integer.parseInt(roomData[i][0]), subDir);  //Creates a new room with the given data
             roomMap.put(Integer.parseInt(roomData[i][0]), roomData[i][1]);  //Inputs data into the HashMap roomMap
+        }
+    }
+
+    static void popItems() {
+        int lines = itemFile.nextInt();
+        itemData = new String[lines][];
+        items = new item[lines];
+
+        System.out.print(itemFile.nextLine());   //finishes off first line of csv
+        for (int i = 0; i != lines; i++) {
+            itemData[i] = itemFile.nextLine().split("[,]");
+            items[i] = new item(new int[]{Integer.valueOf(itemData[i][2]), Integer.valueOf(itemData[i][3]), Integer.valueOf(itemData[i][4])});
         }
     }
 
