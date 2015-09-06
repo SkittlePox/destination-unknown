@@ -15,4 +15,12 @@ public class item {
     public int getNum() {
         return number;
     }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
 }

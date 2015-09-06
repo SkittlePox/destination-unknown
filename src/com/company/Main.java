@@ -11,6 +11,7 @@ public class Main {
     static Scanner itemFile;
 
     public static HashMap<Integer, String> itemMap = new HashMap(); //Basically im setting integers that represent items to their corresponding item name (String)
+    public static HashMap<String, Integer> reverseItemMap = new HashMap();
     public static HashMap<Integer, String> roomMap = new HashMap(); //Same thing but for the rooms
 
     static String[][] roomData; //A 2d array where [room number][room data (including directional movements, room name, etc.)]
@@ -56,6 +57,9 @@ public class Main {
             case "go":
                 john.goTo(parsedCommand[1]);    //parsedCommand[x] is a String that will be a direction (ie: north) that is sent to player.goTo() for translating into a destination room number
                 break;
+            case "take":
+                rooms[john.currentRoom].take(input.substring(parsedCommand[0].length()+1)); //Sends rest of command to take()
+                break;
             default:
                 john.goTo(parsedCommand[0]);
                 break;
@@ -76,6 +80,7 @@ public class Main {
             itemData[i] = itemFile.nextLine().split("[,]");
             items[i] = new item(new int[]{Integer.valueOf(itemData[i][0]), Integer.valueOf(itemData[i][2]), Integer.valueOf(itemData[i][3])});  //Creates a new item with the given data
             itemMap.put(Integer.parseInt(itemData[i][0]), itemData[i][1]);  //Inputs data into the HashMap itemMap
+            reverseItemMap.put(itemData[i][1].toLowerCase(), Integer.parseInt(itemData[i][0]));
         }
     }
 
