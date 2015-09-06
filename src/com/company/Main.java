@@ -44,10 +44,11 @@ public class Main {
 
         rooms[john.currentRoom].visit();
 
-        while (true) {  //Runs parse() and update() until quit
+        while (john.isAlive()) {  //Runs parse() and update() until quit
             parse();
             //update();
         }
+        System.out.println("I'm afraid you have died, perhaps you should try again.");
     }
 
     static void parse() {   //The body of the UI

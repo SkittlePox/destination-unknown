@@ -14,6 +14,7 @@ public class player {
     static Set<Character> vowels = new HashSet<Character>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
     int currentRoom = 0, maxHealth = 20, health = maxHealth, mostPowerWep = -1, mostPower = 0;
+    boolean alive = true;
 
     public player() {
     }
@@ -113,6 +114,10 @@ public class player {
                 mostPowerWep = items.indexOf(currentItem);
             }
         }
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 
     public ArrayList getItems() {
