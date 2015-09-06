@@ -13,9 +13,10 @@ public class player {
 
     static Set<Character> vowels = new HashSet<Character>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
-    int currentRoom = 0;
+    int currentRoom = 0, maxHealth = 20, health = maxHealth, mostPowerWep = -1, mostPower = 0;
 
-    public player() {}
+    public player() {
+    }
 
     public void addItem(int itemNum) {
         items.add(Main.items[itemNum]);
@@ -26,7 +27,7 @@ public class player {
     }
 
     public void goTo(String someDir) {  //From the direction name to the destination room number
-        switch(someDir) {
+        switch (someDir) {
             case "n":
             case "north":
                 warpTo(Main.rooms[currentRoom].getDirs(0));
@@ -57,8 +58,23 @@ public class player {
         }
     }
 
+    public void attack(String someNpc) {
+        if (Main.rooms[currentRoom].hasNpcs.contains(Main.npcs[Main.reverseNpcMap.get(someNpc)])) {
+            if (mostPowerWep != -1)
+                Main.rooms[currentRoom].hasNpcs.get(Main.reverseNpcMap.get(someNpc)).damage(items.get(mostPowerWep).getDamage());
+            else
+                Main.rooms[currentRoom].hasNpcs.get(Main.reverseNpcMap.get(someNpc)).damage(1);
+        }
+        Main.rooms[currentRoom].stay();
+    }
+
+    public void takeDmg(int dmgToTake) {
+        health -= dmgToTake;
+    }
+
     public void takeAll() {
         items.addAll(Main.rooms[currentRoom].hasItems);
+        calculateMpWep();
         Main.rooms[currentRoom].wipe();
         Main.rooms[currentRoom].stay();
     }
@@ -70,7 +86,7 @@ public class player {
     }
 
     public void printInventory() {
-        if(!items.isEmpty()) {
+        if (!items.isEmpty()) {
             System.out.println("You are carrying:");
             for (item currentItem : items) {
                 if (items.indexOf(currentItem) != 0) System.out.println();
@@ -79,7 +95,7 @@ public class player {
                 System.out.print(Main.itemMap.get(currentItem.getNum()));
             }
             System.out.println();
-        } else{
+        } else {
             System.out.println("You are carrying nothing");
             Main.rooms[currentRoom].stay();
         }
@@ -90,9 +106,20 @@ public class player {
         Main.rooms[destinationRoom].visit();
     }
 
+    public void calculateMpWep() {
+        for (item currentItem : items) {
+            if (currentItem.getDamage() > mostPower) {
+                mostPower = currentItem.getDamage();
+                mostPowerWep = items.indexOf(currentItem);
+            }
+        }
+    }
+
     public ArrayList getItems() {
         return items;
     }
 
-    public int getRoomNum() {return currentRoom;}
+    public int getRoomNum() {
+        return currentRoom;
+    }
 }

@@ -8,15 +8,21 @@ public class Main {
     static Scanner scan = new Scanner(System.in);  //Scanner for taking input from the console
     static Scanner mapFile;
     static Scanner itemFile;
+    static Scanner npcFile;
 
-    public static HashMap<Integer, String> itemMap = new HashMap(); //Basically im setting integers that represent items to their corresponding item name (String)
-    public static HashMap<String, Integer> reverseItemMap = new HashMap();
-    public static HashMap<Integer, String> roomMap = new HashMap(); //Same thing but for the rooms
+    public static HashMap<Integer, String> itemMap = new HashMap<>(); //Basically im setting integers that represent items to their corresponding item name (String)
+    public static HashMap<String, Integer> reverseItemMap = new HashMap<>();
+    public static HashMap<Integer, String> npcMap = new HashMap<>();  //Same thing but for the npcs
+    public static HashMap<Integer, String> npcWepMap = new HashMap<>();
+    public static HashMap<String, Integer> reverseNpcMap = new HashMap<>();
+    public static HashMap<Integer, String> roomMap = new HashMap<>(); //Same thing but for the rooms
 
     static String[][] roomData; //A 2d array where [room number][room data (including directional movements, room name, etc.)]
     static String[][] itemData;
+    static String[][] npcData;
     static room[] rooms;    //An array of our room objects. See room.java.
     static item[] items;    //An array of item object.
+    static npc[] npcs;
 
     static player john = new player();  //You become self aware but will remain nameless
 
@@ -26,8 +32,10 @@ public class Main {
     public static void main(String[] args) throws IOException {
         mapFile = new Scanner(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/mapread.csv"));
         itemFile = new Scanner(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/itemread.csv"));
+        npcFile = new Scanner(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/npcread.csv"));
 
         popItems();
+        popNpcs();
         popRooms();
 
         //listRooms();
@@ -68,6 +76,13 @@ public class Main {
                 if(parsedCommand[1].equals("all")) john.dropAll();
                 else rooms[john.currentRoom].drop(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
                 break;
+            case "l":
+            case "look":
+                rooms[john.currentRoom].stay();
+                break;
+            case "kill":
+                john.attack(parsedCommand[1]);
+                break;
             default:
                 john.goTo(parsedCommand[0]);
                 break;
@@ -92,7 +107,23 @@ public class Main {
         }
     }
 
+    static void popNpcs() {
+        int lines = npcFile.nextInt();
+        npcData = new String[lines][];
+        npcs = new npc[lines];
+
+        System.out.println(npcFile.nextLine());   //finishes off first line of csv
+        for(int i= 0; i != lines; i++) {
+            npcData[i] = npcFile.nextLine().split("[,]");
+            npcs[i] = new npc(new int[]{Integer.valueOf(npcData[i][0]), Integer.valueOf(npcData[i][3]), Integer.valueOf(npcData[i][4])});
+            npcMap.put(Integer.valueOf(npcData[i][0]), npcData[i][1]);
+            npcWepMap.put(Integer.valueOf(npcData[i][0]), npcData[i][2]);
+            reverseNpcMap.put(npcData[i][1].toLowerCase(), Integer.valueOf(npcData[i][0]));
+        }
+    }
+
     static void popRooms() {
+        boolean itemnpcToggle = false;
         int lines = mapFile.nextInt();
         roomData = new String[lines][];   //This and rooms will hold room data
         rooms = new room[lines];
@@ -106,8 +137,10 @@ public class Main {
             }
             rooms[i] = new room(Integer.parseInt(roomData[i][0]), subDir);  //Creates a new room with the given data
             roomMap.put(Integer.parseInt(roomData[i][0]), roomData[i][1]);  //Inputs data into the HashMap roomMap\
-            for (int c = 8; c < roomData[i].length; c++) {
-                rooms[i].give(items[Integer.valueOf(roomData[i][c])]);
+            for (int c = 8; c < roomData[i].length; c++) {  //Adds new item to room from index 8 and on
+                if(itemnpcToggle) rooms[i].giveNpc(npcs[Integer.valueOf(roomData[i][c])]);
+                if(roomData[i][c].equals("|")) itemnpcToggle = true;
+                if(!itemnpcToggle) rooms[i].giveItem(items[Integer.valueOf(roomData[i][c])]);
             }
         }
     }

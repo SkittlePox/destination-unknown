@@ -16,6 +16,7 @@ public class room {
     int[] directions = new int[6];  //Each int in this array = a room number to travel to
 
     ArrayList<item> hasItems = new ArrayList<item>();
+    ArrayList<npc> hasNpcs = new ArrayList<npc>();
 
     public room(int rnum, int[] sentDirs) {   //Initializer, assigns a room name and number
         roomNum = rnum;
@@ -35,6 +36,18 @@ public class room {
             }
             System.out.println();
         }
+        if (!hasNpcs.isEmpty()) {
+            for (npc currentNpc : hasNpcs) {
+                if (hasNpcs.indexOf(currentNpc) != 0)
+                    System.out.println();   //If there's more than 1 npc, a line will be printed
+                if (currentNpc.isAlive()) {
+                    if (!vowels.contains(Character.toLowerCase(Main.npcMap.get(currentNpc.getNum()).charAt(0))))
+                        System.out.print("A ");   //If the npc does not begin with a vowel, an 'A' will be printed
+                    System.out.print(Main.npcMap.get(currentNpc.getNum()) + " is here\n");
+
+                }
+            }
+        }
     }
 
     public void take(String someItem) {
@@ -47,6 +60,7 @@ public class room {
         } catch (NullPointerException e) {
             //System.out.println(e.getMessage());
         }
+        Main.john.calculateMpWep();
         stay();
     }
 
@@ -63,14 +77,31 @@ public class room {
     public void stay() {
         timesVisited--;
         visit();
+        if (!hasNpcs.isEmpty()) {
+            for (npc currentNpc : hasNpcs) {
+                if (hasNpcs.indexOf(currentNpc) != 0)
+                    System.out.println();   //If there's more than 1 npc, a line will be printed
+                if (currentNpc.isAlive()) {
+                    if (!vowels.contains(Character.toLowerCase(Main.npcMap.get(currentNpc.getNum()).charAt(0))))
+                        System.out.print("A ");
+                    else System.out.print("An ");
+                    System.out.print(Main.npcMap.get(currentNpc.getNum()) + " attacks you with his " + Main.npcWepMap.get(currentNpc.getNum()) + "\n");
+                    Main.john.takeDmg(currentNpc.getDamage());
+                }
+            }
+        }
     }
 
     public void wipe() {
         hasItems.clear();
     }
 
-    public void give(item newItem) {
+    public void giveItem(item newItem) {
         hasItems.add(newItem);
+    }
+
+    public void giveNpc(npc newNpc) {
+        hasNpcs.add(newNpc);
     }
 
     public int getRoomNum() {
