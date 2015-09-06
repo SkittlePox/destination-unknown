@@ -21,6 +21,10 @@ public class player {
         items.add(Main.items[itemNum]);
     }
 
+    public void removeItem(int itemNum) {
+        items.remove(Main.items[itemNum]);
+    }
+
     public void goTo(String someDir) {  //From the direction name to the destination room number
         switch(someDir) {
             case "n":
@@ -59,14 +63,26 @@ public class player {
         Main.rooms[currentRoom].stay();
     }
 
+    public void dropAll() {
+        Main.rooms[currentRoom].hasItems.addAll(items);
+        items.clear();
+        Main.rooms[currentRoom].stay();
+    }
+
     public void printInventory() {
-        System.out.println("You are carrying:");
-        for (item currentItem : items) {
-            if(items.indexOf(currentItem) != 0) System.out.println();
-            if(!vowels.contains(Character.toLowerCase(Main.itemMap.get(currentItem.getNum()).charAt(0)))) System.out.print("A ");
-            System.out.print(Main.itemMap.get(currentItem.getNum()));
+        if(!items.isEmpty()) {
+            System.out.println("You are carrying:");
+            for (item currentItem : items) {
+                if (items.indexOf(currentItem) != 0) System.out.println();
+                if (!vowels.contains(Character.toLowerCase(Main.itemMap.get(currentItem.getNum()).charAt(0))))
+                    System.out.print("A ");
+                System.out.print(Main.itemMap.get(currentItem.getNum()));
+            }
+            System.out.println();
+        } else{
+            System.out.println("You are carrying nothing");
+            Main.rooms[currentRoom].stay();
         }
-        System.out.println();
     }
 
     public void warpTo(int destinationRoom) {   //Does the actual moving

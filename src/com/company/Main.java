@@ -58,11 +58,15 @@ public class Main {
                 break;
             case "take":
                 if(parsedCommand[1].equals("all")) john.takeAll();
-                else rooms[john.currentRoom].take(input.substring(parsedCommand[0].length() + 1)); //Sends rest of command to take()
+                else rooms[john.currentRoom].take(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
                 break;
             case "i":
             case "inventory":
                 john.printInventory();
+                break;
+            case "drop":
+                if(parsedCommand[1].equals("all")) john.dropAll();
+                else rooms[john.currentRoom].drop(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
                 break;
             default:
                 john.goTo(parsedCommand[0]);

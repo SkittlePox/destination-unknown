@@ -25,10 +25,12 @@ public class room {
     public void visit() {
         timesVisited++;
         System.out.println(Main.roomMap.get(roomNum));
-        if(!hasItems.isEmpty()) {
-            for(item currentItem : hasItems) {
-                if(hasItems.indexOf(currentItem) != 0) System.out.println();    //If there's more than 1 item, a line will be printed
-                if(!vowels.contains(Character.toLowerCase(Main.itemMap.get(currentItem.getNum()).charAt(0)))) System.out.print("A ");   //If the item does not begin with a vowel, an 'A' will be printed
+        if (!hasItems.isEmpty()) {
+            for (item currentItem : hasItems) {
+                if (hasItems.indexOf(currentItem) != 0)
+                    System.out.println();    //If there's more than 1 item, a line will be printed
+                if (!vowels.contains(Character.toLowerCase(Main.itemMap.get(currentItem.getNum()).charAt(0))))
+                    System.out.print("A ");   //If the item does not begin with a vowel, an 'A' will be printed
                 System.out.print(Main.itemMap.get(currentItem.getNum()) + " is here");
             }
             System.out.println();
@@ -42,6 +44,16 @@ public class room {
                 Main.john.addItem(Main.reverseItemMap.get(someItem));
                 hasItems.remove(Main.items[Main.reverseItemMap.get(someItem)]);
             }
+        } catch (NullPointerException e) {
+            //System.out.println(e.getMessage());
+        }
+        stay();
+    }
+
+    public void drop(String someItem) {
+        try {
+            hasItems.add(Main.items[Main.reverseItemMap.get(someItem)]);
+            Main.john.removeItem(Main.reverseItemMap.get(someItem));
         } catch (NullPointerException e) {
             //System.out.println(e.getMessage());
         }
