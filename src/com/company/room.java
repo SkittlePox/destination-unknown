@@ -1,5 +1,6 @@
 package com.company;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -30,18 +31,30 @@ public class room {
                 if(!vowels.contains(Character.toLowerCase(Main.itemMap.get(currentItem.getNum()).charAt(0)))) System.out.print("A ");   //If the item does not begin with a vowel, an 'A' will be printed
                 System.out.print(Main.itemMap.get(currentItem.getNum()) + " is here");
             }
+            System.out.println();
         }
-        System.out.println();
     }
 
     public void take(String someItem) {
         //System.out.println(Main.reverseItemMap.get(someItem));
-        if(hasItems.contains(Main.items[Main.reverseItemMap.get(someItem)])) {
-            Main.john.addItem(Main.reverseItemMap.get(someItem));
-            hasItems.remove(Main.items[Main.reverseItemMap.get(someItem)]);
+        try {
+            if (hasItems.contains(Main.items[Main.reverseItemMap.get(someItem)])) {
+                Main.john.addItem(Main.reverseItemMap.get(someItem));
+                hasItems.remove(Main.items[Main.reverseItemMap.get(someItem)]);
+            }
+        } catch (NullPointerException e) {
+            //System.out.println(e.getMessage());
         }
+        stay();
+    }
+
+    public void stay() {
         timesVisited--;
         visit();
+    }
+
+    public void wipe() {
+        hasItems.clear();
     }
 
     public void give(item newItem) {

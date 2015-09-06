@@ -1,8 +1,7 @@
 package com.company;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -58,7 +57,12 @@ public class Main {
                 john.goTo(parsedCommand[1]);    //parsedCommand[x] is a String that will be a direction (ie: north) that is sent to player.goTo() for translating into a destination room number
                 break;
             case "take":
-                rooms[john.currentRoom].take(input.substring(parsedCommand[0].length()+1)); //Sends rest of command to take()
+                if(parsedCommand[1].equals("all")) john.takeAll();
+                else rooms[john.currentRoom].take(input.substring(parsedCommand[0].length() + 1)); //Sends rest of command to take()
+                break;
+            case "i":
+            case "inventory":
+                john.printInventory();
                 break;
             default:
                 john.goTo(parsedCommand[0]);

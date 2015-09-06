@@ -1,18 +1,24 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Benjamin on 9/5/15.
  */
 public class player {
-    ArrayList<Integer> items = new ArrayList<Integer>();
+    ArrayList<item> items = new ArrayList<item>();
+
+    static Set<Character> vowels = new HashSet<Character>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
+
     int currentRoom = 0;
 
     public player() {}
 
-    public void addItem(int item) {
-        items.add(item);
+    public void addItem(int itemNum) {
+        items.add(Main.items[itemNum]);
     }
 
     public void goTo(String someDir) {  //From the direction name to the destination room number
@@ -45,6 +51,22 @@ public class player {
                 System.out.println("nope");
                 break;
         }
+    }
+
+    public void takeAll() {
+        items.addAll(Main.rooms[currentRoom].hasItems);
+        Main.rooms[currentRoom].wipe();
+        Main.rooms[currentRoom].stay();
+    }
+
+    public void printInventory() {
+        System.out.println("You are carrying:");
+        for (item currentItem : items) {
+            if(items.indexOf(currentItem) != 0) System.out.println();
+            if(!vowels.contains(Character.toLowerCase(Main.itemMap.get(currentItem.getNum()).charAt(0)))) System.out.print("A ");
+            System.out.print(Main.itemMap.get(currentItem.getNum()));
+        }
+        System.out.println();
     }
 
     public void warpTo(int destinationRoom) {   //Does the actual moving
