@@ -40,7 +40,7 @@ public class Main {
 
         //listRooms();
 
-        System.out.println("You are in a destination unknown\nSurrounded by on open field you wake up wearing nothing but leather pants and a tunic\nType 'syntax' for the command syntax\n");
+        //System.out.println("You are in a destination unknown\nSurrounded by on open field you wake up wearing nothing but leather pants and a tunic\nType 'syntax' for the command syntax\n");
 
         rooms[john.currentRoom].visit();
 
@@ -124,13 +124,13 @@ public class Main {
     }
 
     static void popRooms() {
-        boolean itemnpcToggle = false;
         int lines = mapFile.nextInt();
         roomData = new String[lines][];   //This and rooms will hold room data
         rooms = new room[lines];
 
         System.out.print(mapFile.nextLine());   //finishes off first line of csv
         for (int i = 0; i != lines; i++) {
+            boolean itemnpcToggle = false;
             roomData[i] = mapFile.nextLine().split("[,]");
             int[] subDir = new int[6];  //subDir contains the direction information for each room that is sent to each room
             for (int b = 0; b < 6; b++) {

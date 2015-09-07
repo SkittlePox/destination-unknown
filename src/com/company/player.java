@@ -71,6 +71,7 @@ public class player {
 
     public void takeDmg(int dmgToTake) {
         health -= dmgToTake;
+        if(health <= 0) alive = false;
     }
 
     public void takeAll() {
