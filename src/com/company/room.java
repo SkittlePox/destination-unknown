@@ -26,28 +26,8 @@ public class room {
     public void visit() {
         timesVisited++;
         System.out.println(Main.roomMap.get(roomNum));
-        if (!hasItems.isEmpty()) {
-            for (item currentItem : hasItems) {
-                if (hasItems.indexOf(currentItem) != 0)
-                    System.out.println();    //If there's more than 1 item, a line will be printed
-                if (!vowels.contains(Character.toLowerCase(Main.itemMap.get(currentItem.getNum()).charAt(0))))
-                    System.out.print("A ");   //If the item does not begin with a vowel, an 'A' will be printed
-                System.out.print(Main.itemMap.get(currentItem.getNum()) + " is here");
-            }
-            System.out.println();
-        }
-        if (!hasNpcs.isEmpty()) {
-            for (npc currentNpc : hasNpcs) {
-                if (hasNpcs.indexOf(currentNpc) != 0)
-                    System.out.println();   //If there's more than 1 npc, a line will be printed
-                if (currentNpc.isAlive()) {
-                    if (!vowels.contains(Character.toLowerCase(Main.npcMap.get(currentNpc.getNum()).charAt(0))))
-                        System.out.print("A ");   //If the npc does not begin with a vowel, an 'A' will be printed
-                    System.out.print(Main.npcMap.get(currentNpc.getNum()) + " is here\n");
-
-                }
-            }
-        }
+        itemPresent();
+        npcPresent();
     }
 
     public void take(String someItem) {
@@ -75,8 +55,39 @@ public class room {
     }
 
     public void stay() {
-        timesVisited--;
-        visit();
+        System.out.println(Main.roomMap.get(roomNum));
+        npcAttack();
+    }
+
+    public void itemPresent() {
+        if (!hasItems.isEmpty()) {
+            for (item currentItem : hasItems) {
+                if (hasItems.indexOf(currentItem) != 0)
+                    System.out.println();    //If there's more than 1 item, a line will be printed
+                if (!vowels.contains(Character.toLowerCase(Main.itemMap.get(currentItem.getNum()).charAt(0))))
+                    System.out.print("A ");   //If the item does not begin with a vowel, an 'A' will be printed
+                System.out.print(Main.itemMap.get(currentItem.getNum()) + " is here");
+            }
+            System.out.println();
+        }
+    }
+
+    public void npcPresent() {
+        if (!hasNpcs.isEmpty()) {
+            for (npc currentNpc : hasNpcs) {
+                if (hasNpcs.indexOf(currentNpc) != 0)
+                    System.out.println();   //If there's more than 1 npc, a line will be printed
+                if (currentNpc.isAlive()) {
+                    if (!vowels.contains(Character.toLowerCase(Main.npcMap.get(currentNpc.getNum()).charAt(0))))
+                        System.out.print("A ");   //If the npc does not begin with a vowel, an 'A' will be printed
+                    System.out.print(Main.npcMap.get(currentNpc.getNum()) + " is here\n");
+
+                }
+            }
+        }
+    }
+
+    public void npcAttack() {
         if (!hasNpcs.isEmpty()) {
             for (npc currentNpc : hasNpcs) {
                 if (hasNpcs.indexOf(currentNpc) != 0)
@@ -85,8 +96,11 @@ public class room {
                     if (!vowels.contains(Character.toLowerCase(Main.npcMap.get(currentNpc.getNum()).charAt(0))))
                         System.out.print("A ");
                     else System.out.print("An ");
-                    System.out.print(Main.npcMap.get(currentNpc.getNum()) + " attacks you with his " + Main.npcWepMap.get(currentNpc.getNum()) + "\n");
-                    Main.john.takeDmg(currentNpc.getDamage());
+                    if (currentNpc.getDamage() > 0) {   //If the npc does damage do some damage
+                        System.out.print(Main.npcMap.get(currentNpc.getNum()) + " attacks you with his " + Main.npcWepMap.get(currentNpc.getNum()) + "\n");
+                        Main.john.takeDmg(currentNpc.getDamage());
+                    }
+                    else System.out.print(Main.npcMap.get(currentNpc.getNum()) + " is here\n"); //If not mention that it is here
                 }
             }
         }

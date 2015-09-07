@@ -9,6 +9,7 @@ public class Main {
     static Scanner mapFile;
     static Scanner itemFile;
     static Scanner npcFile;
+    static Scanner playerFile;
 
     public static HashMap<Integer, String> itemMap = new HashMap<>(); //Basically im setting integers that represent items to their corresponding item name (String)
     public static HashMap<String, Integer> reverseItemMap = new HashMap<>();
@@ -20,11 +21,12 @@ public class Main {
     static String[][] roomData; //A 2d array where [room number][room data (including directional movements, room name, etc.)]
     static String[][] itemData;
     static String[][] npcData;
+    static String[] playerData;
     static room[] rooms;    //An array of our room objects. See room.java.
     static item[] items;    //An array of item object.
     static npc[] npcs;
 
-    static player john = new player();  //You become self aware but will remain nameless
+    static player john;     //You become self aware but will remain nameless
 
     static String input;
     static String[] parsedCommand;
@@ -33,22 +35,21 @@ public class Main {
         mapFile = new Scanner(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/mapread.csv"));
         itemFile = new Scanner(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/itemread.csv"));
         npcFile = new Scanner(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/npcread.csv"));
+        playerFile = new Scanner(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/playerread.csv"));
 
         popItems();
         popNpcs();
         popRooms();
+        createPlayer();
 
         //listRooms();
 
-        //System.out.println("You are in a destination unknown\nSurrounded by on open field you wake up wearing nothing but leather pants and a tunic\nType 'syntax' for the command syntax\n");
-
         rooms[john.currentRoom].visit();
 
-        while (john.isAlive()) {  //Runs parse() and update() until quit
+        while (john.isAlive()) {  //Runs parse() until quit
             parse();
             //update();
         }
-        System.out.println("I'm afraid you have died, perhaps you should try again.");
     }
 
     static void parse() {   //The body of the UI
@@ -83,6 +84,10 @@ public class Main {
                 break;
             case "kill":
                 john.attack(parsedCommand[1]);
+                break;
+            case "quit":
+            case "exit":
+                john.alive = false;
                 break;
             default:
                 john.goTo(parsedCommand[0]);
@@ -143,6 +148,15 @@ public class Main {
                 if(roomData[i][c].equals("|")) itemnpcToggle = true;
                 if(!itemnpcToggle) rooms[i].giveItem(items[Integer.valueOf(roomData[i][c])]);
             }
+        }
+    }
+
+    static void createPlayer() {
+        playerData = playerFile.nextLine().split("[,]");
+        john = new player(new int[]{Integer.valueOf(playerData[0]), Integer.valueOf(playerData[1]), Integer.valueOf(playerData[2])});
+
+        for(int i = 3; i < playerData.length; i++) {
+            john.addItem(Integer.valueOf(playerData[i]));
         }
     }
 

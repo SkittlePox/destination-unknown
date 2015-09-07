@@ -11,12 +11,13 @@ import java.util.Set;
 public class player {
     ArrayList<item> items = new ArrayList<item>();
 
-    static Set<Character> vowels = new HashSet<Character>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
-
-    int currentRoom = 0, maxHealth = 20, health = maxHealth, mostPowerWep = -1, mostPower = 0;
+    int currentRoom, maxHealth, health, mostPowerWep = -1, mostPower = 0;
     boolean alive = true;
 
-    public player() {
+    public player(int[] playerInfo) {
+        maxHealth = playerInfo[0];
+        health = playerInfo[1];
+        currentRoom = playerInfo[2];
     }
 
     public void addItem(int itemNum) {
@@ -71,7 +72,10 @@ public class player {
 
     public void takeDmg(int dmgToTake) {
         health -= dmgToTake;
-        if(health <= 0) alive = false;
+        if (health <= 0) {
+            alive = false;
+            System.out.println("I'm afraid you have been killed, perhaps you should try again.");
+        }
     }
 
     public void takeAll() {
@@ -91,12 +95,9 @@ public class player {
         if (!items.isEmpty()) {
             System.out.println("You are carrying:");
             for (item currentItem : items) {
-                if (items.indexOf(currentItem) != 0) System.out.println();
-                if (!vowels.contains(Character.toLowerCase(Main.itemMap.get(currentItem.getNum()).charAt(0))))
-                    System.out.print("A ");
-                System.out.print(Main.itemMap.get(currentItem.getNum()));
+                System.out.println(Main.itemMap.get(currentItem.getNum()));
             }
-            System.out.println();
+            Main.rooms[currentRoom].stay();
         } else {
             System.out.println("You are carrying nothing");
             Main.rooms[currentRoom].stay();
