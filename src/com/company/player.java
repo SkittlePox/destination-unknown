@@ -55,8 +55,7 @@ public class player {
                 warpTo(Main.rooms[currentRoom].getDirs(5));
                 break;
             default:
-                System.out.println("nope");
-                break;
+                Main.rooms[currentRoom].stay();
         }
     }
 

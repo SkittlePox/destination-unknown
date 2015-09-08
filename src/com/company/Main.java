@@ -52,45 +52,100 @@ public class Main {
         }
     }
 
+//    static void parse() {   //The body of the UI
+//        input = scan.nextLine().toLowerCase();    //Sets a String to the input command
+//        parsedCommand = input.split("[ ]+");    //Splits that String into a String array so you can examine each word in the input
+//
+//        switch (parsedCommand[0]) {
+//            case "syntax":
+//                System.out.println("To navigate this world, you may move in 6 directions:\nnorth\nsouth\neast\nwest\nup\ndown");
+//                System.out.println("You may type 'north', 'n', 'go north', 'go n' to go north for example");
+//                break;
+//            case "go":
+//                john.goTo(parsedCommand[1]);    //parsedCommand[x] is a String that will be a direction (ie: north) that is sent to player.goTo() for translating into a destination room number
+//                break;
+//            case "take":
+//                if(parsedCommand[1].equals("all")) john.takeAll();
+//                else rooms[john.currentRoom].take(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
+//                break;
+//            case "i":
+//            case "inventory":
+//                john.printInventory();
+//                break;
+//            case "drop":
+//                if(parsedCommand[1].equals("all")) john.dropAll();
+//                else rooms[john.currentRoom].drop(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
+//                break;
+//            case "l":
+//            case "look":
+//                rooms[john.currentRoom].stay();
+//                break;
+//            case "kill":
+//                john.attack(parsedCommand[1]);
+//                break;
+//            case "quit":
+//            case "exit":
+//                john.alive = false;
+//                break;
+//            default:
+//                john.goTo(parsedCommand[0]);
+//                break;
+//        }
+//    }
+
     static void parse() {   //The body of the UI
         input = scan.nextLine().toLowerCase();    //Sets a String to the input command
         parsedCommand = input.split("[ ]+");    //Splits that String into a String array so you can examine each word in the input
 
-        //for(int i = 0; i < parsedCommand.length; i++) System.out.println(parsedCommand[i]);
+        switch (parsedCommand.length) {
+            case 0:
+                rooms[john.getRoomNum()].stay();
+                parse();
+                break;
+            case 1:
+                switch (parsedCommand[0]) {
+                    case "syntax":
+                        System.out.println("To navigate this world, you may move in 6 directions:\nnorth\nsouth\neast\nwest\nup\ndown");
+                        System.out.println("You may type 'north', 'n', 'go north', 'go n' to go north for example");
+                        break;
+                    case "i":
+                    case "inventory":
+                        john.printInventory();
+                        break;
+                    case "l":
+                    case "look":
+                        rooms[john.currentRoom].stay();
+                        break;
+                    case "quit":
+                    case "exit":
+                        john.alive = false;
+                        break;
+                    default:
+                        john.goTo(parsedCommand[0]);
+                        break;
+                }
+                break;
 
-        switch (parsedCommand[0]) {
-            case "syntax":
-                System.out.println("To navigate this world, you may move in 6 directions:\nnorth\nsouth\neast\nwest\nup\ndown");
-                System.out.println("You may type 'north', 'n', 'go north', 'go n' to go north for example");
-                break;
-            case "go":
-                john.goTo(parsedCommand[1]);    //parsedCommand[x] is a String that will be a direction (ie: north) that is sent to player.goTo() for translating into a destination room number
-                break;
-            case "take":
-                if(parsedCommand[1].equals("all")) john.takeAll();
-                else rooms[john.currentRoom].take(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
-                break;
-            case "i":
-            case "inventory":
-                john.printInventory();
-                break;
-            case "drop":
-                if(parsedCommand[1].equals("all")) john.dropAll();
-                else rooms[john.currentRoom].drop(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
-                break;
-            case "l":
-            case "look":
-                rooms[john.currentRoom].stay();
-                break;
-            case "kill":
-                john.attack(parsedCommand[1]);
-                break;
-            case "quit":
-            case "exit":
-                john.alive = false;
-                break;
             default:
-                john.goTo(parsedCommand[0]);
+                switch (parsedCommand[0]) {
+                    case "go":
+                        john.goTo(parsedCommand[1]);    //parsedCommand[x] is a String that will be a direction (ie: north) that is sent to player.goTo() for translating into a destination room number
+                        break;
+                    case "take":
+                        if(parsedCommand[1].equals("all")) john.takeAll();
+                        else rooms[john.currentRoom].take(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
+                        break;
+                    case "drop":
+                        if(parsedCommand[1].equals("all")) john.dropAll();
+                        else rooms[john.currentRoom].drop(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
+                        break;
+                    case "kill":
+                        john.attack(parsedCommand[1]);
+                        break;
+                    default:
+                        john.goTo(parsedCommand[0]);
+                        break;
+                }
                 break;
         }
     }
