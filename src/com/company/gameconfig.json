@@ -1,0 +1,20 @@
+{
+  "player": {
+    "maxHealth": 20,
+    "health": 20,
+    "startingRoomNum": 0,
+    "inventory": [
+      "knife"
+    ]
+  },
+  "items": [
+    {
+      "name": "knife",
+      "damage": 5
+    },
+    {
+      "name": "axe",
+      "damage": 5
+    }
+  ]
+}

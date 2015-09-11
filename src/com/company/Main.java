@@ -1,5 +1,9 @@
 package com.company;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import java.io.*;
 import java.util.*;
 
@@ -7,9 +11,11 @@ public class Main {
 
     static Scanner scan = new Scanner(System.in);  //Scanner for taking input from the console
     static Scanner mapFile;
-    static Scanner itemFile;
     static Scanner npcFile;
-    static Scanner playerFile;
+
+    static FileReader configReader;
+    static JSONObject playerInfo;
+    static JSONArray itemInfo;
 
     public static HashMap<Integer, String> itemMap = new HashMap<>(); //Basically im setting integers that represent items to their corresponding item name (String)
     public static HashMap<String, Integer> reverseItemMap = new HashMap<>();
@@ -19,9 +25,7 @@ public class Main {
     public static HashMap<Integer, String> roomMap = new HashMap<>(); //Same thing but for the rooms
 
     static String[][] roomData; //A 2d array where [room number][room data (including directional movements, room name, etc.)]
-    static String[][] itemData;
     static String[][] npcData;
-    static String[] playerData;
     static room[] rooms;    //An array of our room objects. See room.java.
     static item[] items;    //An array of item object.
     static npc[] npcs;
@@ -31,11 +35,16 @@ public class Main {
     static String input;
     static String[] parsedCommand;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Throwable {
         mapFile = new Scanner(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/mapread.csv"));
-        itemFile = new Scanner(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/itemread.csv"));
         npcFile = new Scanner(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/npcread.csv"));
-        playerFile = new Scanner(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/playerread.csv"));
+
+        configReader = new FileReader(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/gameconfig.json");
+        JSONParser jsonParser = new JSONParser();
+        JSONObject file = (JSONObject) jsonParser.parse(configReader);
+
+        playerInfo = (JSONObject) file.get("player");
+        itemInfo = (JSONArray) file.get("items");
 
         popItems();
         popNpcs();
@@ -132,12 +141,14 @@ public class Main {
                         john.goTo(parsedCommand[1]);    //parsedCommand[x] is a String that will be a direction (ie: north) that is sent to player.goTo() for translating into a destination room number
                         break;
                     case "take":
-                        if(parsedCommand[1].equals("all")) john.takeAll();
-                        else rooms[john.currentRoom].take(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
+                        if (parsedCommand[1].equals("all")) john.takeAll();
+                        else
+                            rooms[john.currentRoom].take(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
                         break;
                     case "drop":
-                        if(parsedCommand[1].equals("all")) john.dropAll();
-                        else rooms[john.currentRoom].drop(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
+                        if (parsedCommand[1].equals("all")) john.dropAll();
+                        else
+                            rooms[john.currentRoom].drop(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
                         break;
                     case "kill":
                         john.attack(parsedCommand[1]);
@@ -155,16 +166,12 @@ public class Main {
     }
 
     static void popItems() {
-        int lines = itemFile.nextInt();
-        itemData = new String[lines][];
-        items = new item[lines];
-
-        System.out.print(itemFile.nextLine());   //finishes off first line of csv
-        for (int i = 0; i != lines; i++) {
-            itemData[i] = itemFile.nextLine().split("[,]");
-            items[i] = new item(new int[]{Integer.valueOf(itemData[i][0]), Integer.valueOf(itemData[i][2]), Integer.valueOf(itemData[i][3])});  //Creates a new item with the given data
-            itemMap.put(Integer.parseInt(itemData[i][0]), itemData[i][1]);  //Inputs data into the HashMap itemMap
-            reverseItemMap.put(itemData[i][1].toLowerCase(), Integer.parseInt(itemData[i][0]));
+        items = new item[itemInfo.size()];
+        for (int i = 0; i != itemInfo.size(); i++) {
+            JSONObject currentItem = (JSONObject) itemInfo.get(i);
+            items[i] = new item(new int[]{i, Integer.valueOf(currentItem.get("damage").toString()), 0});  //Creates a new item with the given data
+            itemMap.put(i, currentItem.get("name").toString());  //Inputs data into the HashMap itemMap
+            reverseItemMap.put(currentItem.get("name").toString().toLowerCase(), i);
         }
     }
 
@@ -174,7 +181,7 @@ public class Main {
         npcs = new npc[lines];
 
         System.out.println(npcFile.nextLine());   //finishes off first line of csv
-        for(int i= 0; i != lines; i++) {
+        for (int i = 0; i != lines; i++) {
             npcData[i] = npcFile.nextLine().split("[,]");
             npcs[i] = new npc(new int[]{Integer.valueOf(npcData[i][0]), Integer.valueOf(npcData[i][3]), Integer.valueOf(npcData[i][4])});
             npcMap.put(Integer.valueOf(npcData[i][0]), npcData[i][1]);
@@ -199,19 +206,24 @@ public class Main {
             rooms[i] = new room(Integer.parseInt(roomData[i][0]), subDir);  //Creates a new room with the given data
             roomMap.put(Integer.parseInt(roomData[i][0]), roomData[i][1]);  //Inputs data into the HashMap roomMap\
             for (int c = 8; c < roomData[i].length; c++) {  //Adds new item to room from index 8 and on
-                if(itemnpcToggle) rooms[i].giveNpc(npcs[Integer.valueOf(roomData[i][c])]);
-                if(roomData[i][c].equals("|")) itemnpcToggle = true;
-                if(!itemnpcToggle) rooms[i].giveItem(items[Integer.valueOf(roomData[i][c])]);
+                if (itemnpcToggle) rooms[i].giveNpc(npcs[Integer.valueOf(roomData[i][c])]);
+                if (roomData[i][c].equals("|")) itemnpcToggle = true;
+                if (!itemnpcToggle) rooms[i].giveItem(items[Integer.valueOf(roomData[i][c])]);
             }
         }
     }
 
     static void createPlayer() {
-        playerData = playerFile.nextLine().split("[,]");
-        john = new player(new int[]{Integer.valueOf(playerData[0]), Integer.valueOf(playerData[1]), Integer.valueOf(playerData[2])});
+        john = new player(new int[]{Integer.valueOf(playerInfo.get("maxHealth").toString()), Integer.valueOf(playerInfo.get("health").toString()), Integer.valueOf(playerInfo.get("startingRoomNum").toString())});
 
-        for(int i = 3; i < playerData.length; i++) {
-            john.addItem(Integer.valueOf(playerData[i]));
+        if (playerInfo.get("inventory") != null) {
+            JSONArray playerItems = (JSONArray) playerInfo.get("inventory");
+            for (Object currentItem : playerItems) {
+                if (currentItem.getClass().toString().equals("class java.lang.String"))
+                    john.addItem(reverseItemMap.get(currentItem.toString()));
+                else
+                    john.addItem(Integer.valueOf(currentItem.toString()));
+            }
         }
     }
 
