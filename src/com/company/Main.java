@@ -17,7 +17,7 @@ public class Main {
     static JSONArray npcData;
     static JSONArray roomData;
 
-    public static HashMap<Integer, String> itemMap = new HashMap<>(); //Basically im setting integers that represent items to their corresponding item name (String)
+    public static HashMap<Integer, String> itemMap = new HashMap<>(); //Basically im setting integers that represent hasItems to their corresponding item name (String)
     public static HashMap<String, Integer> reverseItemMap = new HashMap<>();
     public static HashMap<Integer, String> npcMap = new HashMap<>();  //Same thing but for the npcs
     public static HashMap<Integer, String> npcWepMap = new HashMap<>();
@@ -131,9 +131,22 @@ public class Main {
 
         for (int i = 0; i != npcData.size(); i++) {
             JSONObject currentNpc = (JSONObject) npcData.get(i);
-            npcs[i] = new npc(new int[]{i, Integer.valueOf(currentNpc.get("health").toString()), reverseItemMap.get(currentNpc.get("inventory").toString())});
+            npcs[i] = new npc(new int[]{i, Integer.valueOf(currentNpc.get("health").toString())});
+
+            if (currentNpc.get("inventory") != null) {
+                JSONArray currentNpcItems = (JSONArray) currentNpc.get("inventory");
+                for (Object currentNpcItem : currentNpcItems) {
+                    npcs[i].giveItem(items[reverseItemMap.get(currentNpcItem.toString())]);
+                }
+            }
+            if (currentNpc.get("drop") != null) {
+                JSONArray currentNpcDropItems = (JSONArray) currentNpc.get("drop");
+                for (Object currentNpcDropItem : currentNpcDropItems) {
+                    npcs[i].giveDropItem(items[reverseItemMap.get(currentNpcDropItem.toString())]);
+                }
+            }
+
             npcMap.put(i, currentNpc.get("name").toString());
-            npcWepMap.put(i, currentNpc.get("inventory").toString());
             reverseNpcMap.put(currentNpc.get("name").toString().toLowerCase(), i);
         }
     }
@@ -150,7 +163,7 @@ public class Main {
         for (int i = 0; i < roomData.size(); i++) {
             JSONObject currentRoom = (JSONObject) roomData.get(i);
             JSONArray objectDirections = (JSONArray) currentRoom.get("directions");
-            JSONArray objectItems = (JSONArray) currentRoom.get("items");
+            JSONArray objectItems = (JSONArray) currentRoom.get("hasItems");
             JSONArray objectNpcs = (JSONArray) currentRoom.get("npcs");
 
             int[] tempDirections = new int[6];  //tempDirections contains the direction information for each room that is sent to each room

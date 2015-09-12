@@ -1,15 +1,12 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Benjamin on 9/5/15.
  */
 public class player {
-    ArrayList<item> items = new ArrayList<item>();
+    ArrayList<item> hasItems = new ArrayList<item>();
 
     int currentRoom, maxHealth, health, mostPowerWep = -1, mostPower = 0;
     boolean alive = true;
@@ -21,11 +18,12 @@ public class player {
     }
 
     public void addItem(int itemNum) {
-        items.add(Main.items[itemNum]);
+        hasItems.add(Main.items[itemNum]);
+        calculateMpWep();
     }
 
     public void removeItem(int itemNum) {
-        items.remove(Main.items[itemNum]);
+        hasItems.remove(Main.items[itemNum]);
     }
 
     public void goTo(String someDir) {  //From the direction name to the destination room number
@@ -60,11 +58,13 @@ public class player {
     }
 
     public void attack(String someNpc) {
-        if (Main.rooms[currentRoom].hasNpcs.contains(Main.npcs[Main.reverseNpcMap.get(someNpc)])) {
-            if (mostPowerWep != -1)
-                Main.rooms[currentRoom].hasNpcs.get(Main.reverseNpcMap.get(someNpc)).damage(items.get(mostPowerWep).getDamage());
-            else
-                Main.rooms[currentRoom].hasNpcs.get(Main.reverseNpcMap.get(someNpc)).damage(1);
+        if (Main.reverseNpcMap.containsKey(someNpc)) {
+            if (Main.rooms[currentRoom].hasNpcs.contains(Main.npcs[Main.reverseNpcMap.get(someNpc)])) {
+                if (mostPowerWep != -1)
+                    Main.rooms[currentRoom].hasNpcs.get(Main.reverseNpcMap.get(someNpc)).damage(hasItems.get(mostPowerWep).getDamage());
+                else
+                    Main.rooms[currentRoom].hasNpcs.get(Main.reverseNpcMap.get(someNpc)).damage(1);
+            }
         }
         Main.rooms[currentRoom].stay();
     }
@@ -78,22 +78,22 @@ public class player {
     }
 
     public void takeAll() {
-        items.addAll(Main.rooms[currentRoom].hasItems);
+        hasItems.addAll(Main.rooms[currentRoom].hasItems);
         calculateMpWep();
         Main.rooms[currentRoom].wipe();
         Main.rooms[currentRoom].stay();
     }
 
     public void dropAll() {
-        Main.rooms[currentRoom].hasItems.addAll(items);
-        items.clear();
+        Main.rooms[currentRoom].hasItems.addAll(hasItems);
+        hasItems.clear();
         Main.rooms[currentRoom].stay();
     }
 
     public void printInventory() {
-        if (!items.isEmpty()) {
+        if (!hasItems.isEmpty()) {
             System.out.println("You are carrying:");
-            for (item currentItem : items) {
+            for (item currentItem : hasItems) {
                 System.out.println(Main.itemMap.get(currentItem.getNum()));
             }
             Main.rooms[currentRoom].stay();
@@ -109,20 +109,16 @@ public class player {
     }
 
     public void calculateMpWep() {
-        for (item currentItem : items) {
+        for (item currentItem : hasItems) {
             if (currentItem.getDamage() > mostPower) {
                 mostPower = currentItem.getDamage();
-                mostPowerWep = items.indexOf(currentItem);
+                mostPowerWep = hasItems.indexOf(currentItem);
             }
         }
     }
 
     public boolean isAlive() {
         return alive;
-    }
-
-    public ArrayList getItems() {
-        return items;
     }
 
     public int getRoomNum() {

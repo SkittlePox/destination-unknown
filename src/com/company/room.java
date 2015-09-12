@@ -1,6 +1,5 @@
 package com.company;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -82,7 +81,6 @@ public class room {
                     if (!vowels.contains(Character.toLowerCase(Main.npcMap.get(currentNpc.getNum()).charAt(0))))
                         System.out.print("A ");   //If the npc does not begin with a vowel, an 'A' will be printed
                     System.out.print(Main.npcMap.get(currentNpc.getNum()) + " is here\n");
-
                 }
             }
         }
@@ -98,7 +96,7 @@ public class room {
                         System.out.print("A ");
                     else System.out.print("An ");
                     if (currentNpc.getDamage() > 0) {   //If the npc does damage do some damage
-                        System.out.print(Main.npcMap.get(currentNpc.getNum()) + " attacks you with his " + Main.npcWepMap.get(currentNpc.getNum()) + "\n");
+                        System.out.print(Main.npcMap.get(currentNpc.getNum()) + " attacks you with his " + currentNpc.getWepName() + "\n");
                         Main.john.takeDmg(currentNpc.getDamage());
                     }
                     else System.out.print(Main.npcMap.get(currentNpc.getNum()) + " is here\n"); //If not mention that it is here
