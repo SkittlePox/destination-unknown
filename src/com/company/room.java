@@ -49,13 +49,14 @@ public class room {
             hasItems.add(Main.items[Main.reverseItemMap.get(someItem)]);
             Main.john.removeItem(Main.reverseItemMap.get(someItem));
         } catch (NullPointerException e) {
-            //System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
         stay();
     }
 
     public void stay() {
         System.out.println(Main.roomMap.get(roomNum));
+        itemPresent();
         npcAttack();
     }
 

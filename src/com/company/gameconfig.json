@@ -4,9 +4,50 @@
     "health": 20,
     "startingRoomNum": 0,
     "inventory": [
-      "knife"
+      "axe"
     ]
   },
+  "rooms": [
+    {
+      "name": "Room 0",
+      "directions": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        1
+      ],
+      "items": [
+        "knife"
+      ],
+      "npcs": [
+        "troll"
+      ]
+    },
+    {
+      "name": "Room 1",
+      "directions": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "Room 2",
+      "directions": [
+        0,
+        1,
+        2,
+        1,
+        2,
+        1
+      ]
+    }
+  ],
   "items": [
     {
       "name": "knife",
@@ -15,6 +56,14 @@
     {
       "name": "axe",
       "damage": 5
+    }
+  ],
+  "npcs": [
+    {
+      "name": "Troll",
+      "health": 10,
+      "startingRoomNum": 1,
+      "inventory": "axe"
     }
   ]
 }

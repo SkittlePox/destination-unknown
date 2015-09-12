@@ -1,10 +1,13 @@
 package com.company;
 
+import java.util.ArrayList;
+
 /**
  * Created by Benjamin on 9/6/15.
  */
 public class npc {
     int number, maxHealth, health, damage;
+
     boolean alive = true;
 
     npc(int[] npcInfo) {
