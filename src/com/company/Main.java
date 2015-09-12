@@ -23,6 +23,7 @@ public class Main {
     public static HashMap<Integer, String> npcWepMap = new HashMap<>();
     public static HashMap<String, Integer> reverseNpcMap = new HashMap<>();
     public static HashMap<Integer, String> roomMap = new HashMap<>(); //Same thing but for the rooms
+    public static HashMap<String, Integer> reverseRoomMap = new HashMap<>();
 
     static room[] rooms;    //An array of our room objects. See room.java.
     static item[] items;    //An array of item object.
@@ -142,6 +143,12 @@ public class Main {
 
         for (int i = 0; i < roomData.size(); i++) {
             JSONObject currentRoom = (JSONObject) roomData.get(i);
+            roomMap.put(i, currentRoom.get("name").toString());  //Inputs data into the HashMap roomMap
+            reverseRoomMap.put(currentRoom.get("name").toString().toLowerCase(), i);
+        }
+
+        for (int i = 0; i < roomData.size(); i++) {
+            JSONObject currentRoom = (JSONObject) roomData.get(i);
             JSONArray objectDirections = (JSONArray) currentRoom.get("directions");
             JSONArray objectItems = (JSONArray) currentRoom.get("items");
             JSONArray objectNpcs = (JSONArray) currentRoom.get("npcs");
@@ -149,19 +156,21 @@ public class Main {
             int[] tempDirections = new int[6];  //tempDirections contains the direction information for each room that is sent to each room
 
             for (int b = 0; b < 6; b++) {
-                tempDirections[b] = Integer.valueOf(objectDirections.get(b).toString());
+                if (objectDirections.get(b).getClass().toString().equals("class java.lang.Long"))
+                    tempDirections[b] = Integer.valueOf(objectDirections.get(b).toString());
+                else
+                    tempDirections[b] = reverseRoomMap.get(objectDirections.get(b).toString().toLowerCase());
             }
 
             rooms[i] = new room(i, tempDirections);  //Creates a new room with the given data
-            roomMap.put(i, currentRoom.get("name").toString());  //Inputs data into the HashMap roomMap
 
             if (objectItems != null)
                 for (Object currentItem : objectItems) {
-                    rooms[i].giveItem(items[reverseItemMap.get(currentItem.toString())]);
+                    rooms[i].giveItem(items[reverseItemMap.get(currentItem.toString().toLowerCase())]);
                 }
             if (objectNpcs != null)
-                for(Object currentNpc : objectNpcs) {
-                    rooms[i].giveNpc(npcs[reverseNpcMap.get(currentNpc.toString())]);
+                for (Object currentNpc : objectNpcs) {
+                    rooms[i].giveNpc(npcs[reverseNpcMap.get(currentNpc.toString().toLowerCase())]);
                 }
         }
     }
@@ -177,12 +186,6 @@ public class Main {
                 else
                     john.addItem(Integer.valueOf(currentItem.toString()));
             }
-        }
-    }
-
-    static void listRooms() {   //Lists the rooms
-        for (int i = 0; i != roomMap.size(); i++) {
-            System.out.println(i + " " + roomMap.get(i));   //Testing out the functionality of the HashMap roomMap
         }
     }
 }
