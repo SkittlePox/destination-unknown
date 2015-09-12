@@ -67,6 +67,7 @@
     {
       "name": "Troll",
       "health": 10,
+      "genderIdentifier": "his",
       "startingRoomNum": 1,
       "inventory": [
         "axe"
@@ -74,7 +75,7 @@
       "drop": [
         "axe"
       ],
-      "isUnique": true
+      "isUnique": false
     }
   ]
 }

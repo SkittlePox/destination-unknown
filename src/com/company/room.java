@@ -104,7 +104,7 @@ public class room {
                         else System.out.print("An ");
                     }
                     if (currentNpc.getDamage() > 0) {   //If the npc does damage do some damage
-                        System.out.print(Main.npcMap.get(currentNpc.getNum()) + " attacks you with his " + currentNpc.getWepName() + "\n");
+                        System.out.print(Main.npcMap.get(currentNpc.getNum()) + " attacks you with "+ currentNpc.getGenderPosses() + " " + currentNpc.getWepName() + "\n");
                         Main.john.takeDmg(currentNpc.getDamage());
                     } else
                         System.out.print(Main.npcMap.get(currentNpc.getNum()) + " is here\n"); //If not mention that it is here

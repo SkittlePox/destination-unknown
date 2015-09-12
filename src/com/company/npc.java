@@ -11,6 +11,8 @@ import java.util.Set;
 public class npc {
     int number, maxHealth, health, damage = 0, mostPower = 0, mostPowerWep = 0;
 
+    String genderPossess;
+
     Set<Character> vowels = new HashSet<Character>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
     ArrayList<item> hasItems = new ArrayList<item>();
@@ -18,11 +20,12 @@ public class npc {
 
     boolean alive = true, unique;
 
-    npc(int[] npcInfo, boolean givenUniqueness) {
+    npc(int[] npcInfo, boolean givenUniqueness, String givenGenderPossess) {
         number = npcInfo[0];
         maxHealth = npcInfo[1];
         health = maxHealth;
         unique = givenUniqueness;
+        genderPossess = givenGenderPossess;
     }
 
     public void damage(int dmg) {
@@ -51,6 +54,10 @@ public class npc {
                 }
             }
         }
+    }
+
+    public String getGenderPosses() {
+        return genderPossess;
     }
 
     public void calculateMpWep() {

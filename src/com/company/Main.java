@@ -135,7 +135,7 @@ public class Main {
 
         for (int i = 0; i != npcData.size(); i++) {
             JSONObject currentNpc = (JSONObject) npcData.get(i);
-            npcs[i] = new npc(new int[]{i, Integer.valueOf(currentNpc.get("health").toString())}, (boolean) currentNpc.get("isUnique"));
+            npcs[i] = new npc(new int[]{i, Integer.valueOf(currentNpc.get("health").toString())}, (boolean) currentNpc.get("isUnique"), (String) currentNpc.get("genderIdentifier"));
 
             if (currentNpc.get("inventory") != null) {
                 JSONArray currentNpcItems = (JSONArray) currentNpc.get("inventory");
