@@ -37,7 +37,7 @@ public class room {
                 hasItems.remove(Main.items[Main.reverseItemMap.get(someItem)]);
             }
         } catch (NullPointerException e) {
-            //System.out.println(e.getMessage());
+            System.out.println("You can't take an item that is not here");
         }
         Main.john.calculateMpWep();
         stay();
@@ -48,7 +48,7 @@ public class room {
             hasItems.add(Main.items[Main.reverseItemMap.get(someItem)]);
             Main.john.removeItem(Main.reverseItemMap.get(someItem));
         } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
+            System.out.println("You can't drop an item you do not have");
         }
         stay();
     }
@@ -64,8 +64,11 @@ public class room {
             for (item currentItem : hasItems) {
                 if (hasItems.indexOf(currentItem) != 0)
                     System.out.println();    //If there's more than 1 item, a line will be printed
-                if (!vowels.contains(Character.toLowerCase(Main.itemMap.get(currentItem.getNum()).charAt(0))))
-                    System.out.print("A ");   //If the item does not begin with a vowel, an 'A' will be printed
+                if (!currentItem.isUnique()) {
+                    if (!vowels.contains(Character.toLowerCase(Main.itemMap.get(currentItem.getNum()).charAt(0)))) {
+                        System.out.print("A ");   //If the item does not begin with a vowel, an 'A' will be printed
+                    } else System.out.print("An ");
+                }
                 System.out.print(Main.itemMap.get(currentItem.getNum()) + " is here");
             }
             System.out.println();
@@ -78,8 +81,11 @@ public class room {
                 if (hasNpcs.indexOf(currentNpc) != 0)
                     System.out.println();   //If there's more than 1 npc, a line will be printed
                 if (currentNpc.isAlive()) {
-                    if (!vowels.contains(Character.toLowerCase(Main.npcMap.get(currentNpc.getNum()).charAt(0))))
-                        System.out.print("A ");   //If the npc does not begin with a vowel, an 'A' will be printed
+                    if (!currentNpc.isUnique()) {
+                        if (!vowels.contains(Character.toLowerCase(Main.npcMap.get(currentNpc.getNum()).charAt(0)))) {
+                            System.out.print("A ");   //If the npc does not begin with a vowel, an 'A' will be printed
+                        } else System.out.print("An ");
+                    }
                     System.out.print(Main.npcMap.get(currentNpc.getNum()) + " is here\n");
                 }
             }
@@ -92,14 +98,16 @@ public class room {
                 if (hasNpcs.indexOf(currentNpc) != 0)
                     System.out.println();   //If there's more than 1 npc, a line will be printed
                 if (currentNpc.isAlive()) {
-                    if (!vowels.contains(Character.toLowerCase(Main.npcMap.get(currentNpc.getNum()).charAt(0))))
-                        System.out.print("A ");
-                    else System.out.print("An ");
+                    if (!currentNpc.isUnique()) {
+                        if (!vowels.contains(Character.toLowerCase(Main.npcMap.get(currentNpc.getNum()).charAt(0))))
+                            System.out.print("A ");
+                        else System.out.print("An ");
+                    }
                     if (currentNpc.getDamage() > 0) {   //If the npc does damage do some damage
                         System.out.print(Main.npcMap.get(currentNpc.getNum()) + " attacks you with his " + currentNpc.getWepName() + "\n");
                         Main.john.takeDmg(currentNpc.getDamage());
-                    }
-                    else System.out.print(Main.npcMap.get(currentNpc.getNum()) + " is here\n"); //If not mention that it is here
+                    } else
+                        System.out.print(Main.npcMap.get(currentNpc.getNum()) + " is here\n"); //If not mention that it is here
                 }
             }
         }

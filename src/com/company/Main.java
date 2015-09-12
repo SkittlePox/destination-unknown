@@ -20,7 +20,6 @@ public class Main {
     public static HashMap<Integer, String> itemMap = new HashMap<>(); //Basically im setting integers that represent hasItems to their corresponding item name (String)
     public static HashMap<String, Integer> reverseItemMap = new HashMap<>();
     public static HashMap<Integer, String> npcMap = new HashMap<>();  //Same thing but for the npcs
-    public static HashMap<Integer, String> npcWepMap = new HashMap<>();
     public static HashMap<String, Integer> reverseNpcMap = new HashMap<>();
     public static HashMap<Integer, String> roomMap = new HashMap<>(); //Same thing but for the rooms
     public static HashMap<String, Integer> reverseRoomMap = new HashMap<>();
@@ -96,16 +95,21 @@ public class Main {
                         break;
                     case "take":
                         if (parsedCommand[1].equals("all")) john.takeAll();
+                        else if (parsedCommand[1].equals("the"))
+                            rooms[john.getRoomNum()].take(input.substring(9));  //Sends rest of command to take()
                         else
-                            rooms[john.getRoomNum()].take(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
+                            rooms[john.getRoomNum()].take(input.substring(5));  //Sends rest of command to take()
                         break;
                     case "drop":
                         if (parsedCommand[1].equals("all")) john.dropAll();
+                        else if (parsedCommand[1].equals("the"))
+                            rooms[john.getRoomNum()].drop(input.substring(9));  //Sends rest of command to take()
                         else
-                            rooms[john.getRoomNum()].drop(input.substring(parsedCommand[0].length() + 1));  //Sends rest of command to take()
+                            rooms[john.getRoomNum()].drop(input.substring(5));  //Sends rest of command to take()
                         break;
                     case "kill":
-                        john.attack(parsedCommand[1]);
+                        if (parsedCommand[1].equals("the")) john.attack(input.substring(9));
+                        else john.attack(input.substring(5));
                         break;
                     default:
                         john.goTo(parsedCommand[0]);
@@ -120,7 +124,7 @@ public class Main {
 
         for (int i = 0; i != itemData.size(); i++) {
             JSONObject currentItem = (JSONObject) itemData.get(i);
-            items[i] = new item(new int[]{i, Integer.valueOf(currentItem.get("damage").toString()), 0});  //Creates a new item with the given data
+            items[i] = new item(new int[]{i, Integer.valueOf(currentItem.get("damage").toString()), 0}, (boolean) currentItem.get("isUnique"));  //Creates a new item with the given data
             itemMap.put(i, currentItem.get("name").toString());  //Inputs data into the HashMap itemMap
             reverseItemMap.put(currentItem.get("name").toString().toLowerCase(), i);
         }
@@ -131,7 +135,7 @@ public class Main {
 
         for (int i = 0; i != npcData.size(); i++) {
             JSONObject currentNpc = (JSONObject) npcData.get(i);
-            npcs[i] = new npc(new int[]{i, Integer.valueOf(currentNpc.get("health").toString())});
+            npcs[i] = new npc(new int[]{i, Integer.valueOf(currentNpc.get("health").toString())}, (boolean) currentNpc.get("isUnique"));
 
             if (currentNpc.get("inventory") != null) {
                 JSONArray currentNpcItems = (JSONArray) currentNpc.get("inventory");

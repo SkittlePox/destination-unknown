@@ -16,25 +16,36 @@ public class npc {
     ArrayList<item> hasItems = new ArrayList<item>();
     ArrayList<item> itemDropList = new ArrayList<item>();
 
-    boolean alive = true;
+    boolean alive = true, unique;
 
-    npc(int[] npcInfo) {
+    npc(int[] npcInfo, boolean givenUniqueness) {
         number = npcInfo[0];
         maxHealth = npcInfo[1];
         health = maxHealth;
+        unique = givenUniqueness;
     }
 
     public void damage(int dmg) {
         health -= dmg;
         if (health <= 0) {
             alive = false;
-            System.out.println("You have slain the " + Main.npcMap.get(number));
+            System.out.print("You have slain ");
+            if (!unique) {
+                System.out.print("the ");
+            }
+            System.out.print(Main.npcMap.get(number));
             if (itemDropList.size() > 0) {
-                System.out.println("The " + Main.npcMap.get(number) + " has dropped:");
+                if (!unique) {
+                    System.out.println("\nThe " + Main.npcMap.get(number) + " has dropped:");
+                } else {
+                    System.out.println("\n" + Main.npcMap.get(number) + " has dropped:");
+                }
                 for (item currentDropItem : itemDropList) {
-                    if (!vowels.contains(Character.toLowerCase(Main.itemMap.get(currentDropItem.getNum()).charAt(0)))) {
-                        System.out.print("A ");
-                    } else System.out.print("An ");
+                    if (!currentDropItem.isUnique()) {
+                        if (!vowels.contains(Character.toLowerCase(Main.itemMap.get(currentDropItem.getNum()).charAt(0)))) {
+                            System.out.print("A ");
+                        } else System.out.print("An ");
+                    }
                     System.out.println(Main.itemMap.get(currentDropItem.getNum()));
                     Main.rooms[Main.john.getRoomNum()].giveItem(currentDropItem);
                 }
@@ -63,6 +74,10 @@ public class npc {
 
     public String getWepName() {
         return Main.itemMap.get(hasItems.get(mostPowerWep).getNum());
+    }
+
+    public boolean isUnique() {
+        return unique;
     }
 
     public boolean isAlive() {
