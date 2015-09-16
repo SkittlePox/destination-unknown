@@ -17,9 +17,9 @@ public class Main {
     static JSONArray npcData;
     static JSONArray roomData;
 
-    public static HashMap<String, Integer> reverseItemMap = new HashMap<>();
-    public static HashMap<String, Integer> reverseNpcMap = new HashMap<>();
-    public static HashMap<String, Integer> reverseRoomMap = new HashMap<>();
+    public static HashMap<String, Integer> checkItemMap = new HashMap<>();
+    public static HashMap<String, Integer> checkNpcMap = new HashMap<>();
+    public static HashMap<String, Integer> checkRoomMap = new HashMap<>();
 
     static room[] rooms;    //An array of our room objects. See room.java.
     static item[] items;    //An array of item object.
@@ -133,8 +133,11 @@ public class Main {
 
         for (int i = 0; i != itemData.size(); i++) {
             JSONObject currentItem = (JSONObject) itemData.get(i);
-            items[i] = new item(new int[]{i, Integer.valueOf(currentItem.get("damage").toString()), 0}, (boolean) currentItem.get("isUnique"), currentItem.get("name").toString());  //Creates a new item with the given data
-            reverseItemMap.put(currentItem.get("name").toString().toLowerCase(), i);
+            try {
+                items[i] = new item(new int[]{i, Integer.valueOf(currentItem.get("damage").toString()), 0}, (boolean) currentItem.get("isUnique"), currentItem.get("name").toString());  //Creates a new item with the given data
+            }
+            catch (NullPointerException e){}
+            checkItemMap.put(currentItem.get("name").toString().toLowerCase(), i);
         }
     }
 
@@ -148,16 +151,16 @@ public class Main {
             if (currentNpc.get("inventory") != null) {
                 JSONArray currentNpcItems = (JSONArray) currentNpc.get("inventory");
                 for (Object currentNpcItem : currentNpcItems) {
-                    npcs[i].giveItem(items[reverseItemMap.get(currentNpcItem.toString().toLowerCase())]);
+                    npcs[i].giveItem(items[checkItemMap.get(currentNpcItem.toString().toLowerCase())]);
                 }
             }
             if (currentNpc.get("drop") != null) {
                 JSONArray currentNpcDropItems = (JSONArray) currentNpc.get("drop");
                 for (Object currentNpcDropItem : currentNpcDropItems) {
-                    npcs[i].giveDropItem(items[reverseItemMap.get(currentNpcDropItem.toString().toLowerCase())]);
+                    npcs[i].giveDropItem(items[checkItemMap.get(currentNpcDropItem.toString().toLowerCase())]);
                 }
             }
-            reverseNpcMap.put(currentNpc.get("name").toString().toLowerCase(), i);
+            checkNpcMap.put(currentNpc.get("name").toString().toLowerCase(), i);
         }
     }
 
@@ -166,7 +169,7 @@ public class Main {
 
         for (int i = 0; i < roomData.size(); i++) {
             JSONObject currentRoom = (JSONObject) roomData.get(i);
-            reverseRoomMap.put(currentRoom.get("name").toString().toLowerCase(), i);
+            checkRoomMap.put(currentRoom.get("name").toString().toLowerCase(), i);
         }
 
         for (int i = 0; i < roomData.size(); i++) {
@@ -181,18 +184,18 @@ public class Main {
                 if (objectDirections.get(b).getClass().toString().equals("class java.lang.Long"))
                     tempDirections[b] = Integer.valueOf(objectDirections.get(b).toString());
                 else
-                    tempDirections[b] = reverseRoomMap.get(objectDirections.get(b).toString().toLowerCase());
+                    tempDirections[b] = checkRoomMap.get(objectDirections.get(b).toString().toLowerCase());
             }
 
             rooms[i] = new room(i, tempDirections, currentRoom.get("name").toString());  //Creates a new room with the given data
 
             if (objectItems != null)
                 for (Object currentItem : objectItems) {
-                    rooms[i].giveItem(items[reverseItemMap.get(currentItem.toString().toLowerCase())]);
+                    rooms[i].giveItem(items[checkItemMap.get(currentItem.toString().toLowerCase())]);
                 }
             if (objectNpcs != null)
                 for (Object currentNpc : objectNpcs) {
-                    rooms[i].giveNpc(npcs[reverseNpcMap.get(currentNpc.toString().toLowerCase())]);
+                    rooms[i].giveNpc(npcs[checkNpcMap.get(currentNpc.toString().toLowerCase())]);
                 }
         }
     }
@@ -204,7 +207,7 @@ public class Main {
             JSONArray playerItems = (JSONArray) playerData.get("inventory");
             for (Object currentItem : playerItems) {
                 if (currentItem.getClass().toString().equals("class java.lang.String"))
-                    john.addItem(reverseItemMap.get(currentItem.toString()));
+                    john.addItem(checkItemMap.get(currentItem.toString()));
                 else
                     john.addItem(Integer.valueOf(currentItem.toString()));
             }
