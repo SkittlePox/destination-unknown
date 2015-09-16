@@ -8,11 +8,18 @@ public class item {
 
     boolean unique;
 
-    item(int[] givInfo, boolean givenUniqueness) {
+    String name;
+
+    item(int[] givInfo, boolean givenUniqueness, String givenName) {
         number = givInfo[0];
         damage = givInfo[1];
         weight = givInfo[2];
         unique = givenUniqueness;
+        name = givenName;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getNum() {

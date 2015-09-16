@@ -83,11 +83,11 @@
     },
     {
       "name": "Papa John",
-      "health": 5,
+      "health": 100,
       "genderIdentifier": "his",
       "inventory": [
         "Excalibur"
-      ]
+      ],
       "drop": [
         "Excalibur"
       ],

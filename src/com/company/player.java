@@ -119,7 +119,7 @@ public class player {
         if (!hasItems.isEmpty()) {
             System.out.println("You are carrying:");
             for (item currentItem : hasItems) {
-                System.out.println(Main.itemMap.get(currentItem.getNum()));
+                System.out.println(currentItem.getName());
             }
             Main.rooms[currentRoom].stay();
         } else {

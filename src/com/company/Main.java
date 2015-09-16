@@ -17,11 +17,8 @@ public class Main {
     static JSONArray npcData;
     static JSONArray roomData;
 
-    public static HashMap<Integer, String> itemMap = new HashMap<>(); //Basically im setting integers that represent hasItems to their corresponding item name (String)
     public static HashMap<String, Integer> reverseItemMap = new HashMap<>();
-    public static HashMap<Integer, String> npcMap = new HashMap<>();  //Same thing but for the npcs
     public static HashMap<String, Integer> reverseNpcMap = new HashMap<>();
-    public static HashMap<Integer, String> roomMap = new HashMap<>(); //Same thing but for the rooms
     public static HashMap<String, Integer> reverseRoomMap = new HashMap<>();
 
     static room[] rooms;    //An array of our room objects. See room.java.
@@ -136,8 +133,7 @@ public class Main {
 
         for (int i = 0; i != itemData.size(); i++) {
             JSONObject currentItem = (JSONObject) itemData.get(i);
-            items[i] = new item(new int[]{i, Integer.valueOf(currentItem.get("damage").toString()), 0}, (boolean) currentItem.get("isUnique"));  //Creates a new item with the given data
-            itemMap.put(i, currentItem.get("name").toString());  //Inputs data into the HashMap itemMap
+            items[i] = new item(new int[]{i, Integer.valueOf(currentItem.get("damage").toString()), 0}, (boolean) currentItem.get("isUnique"), currentItem.get("name").toString());  //Creates a new item with the given data
             reverseItemMap.put(currentItem.get("name").toString().toLowerCase(), i);
         }
     }
@@ -147,7 +143,7 @@ public class Main {
 
         for (int i = 0; i != npcData.size(); i++) {
             JSONObject currentNpc = (JSONObject) npcData.get(i);
-            npcs[i] = new npc(new int[]{i, Integer.valueOf(currentNpc.get("health").toString())}, (boolean) currentNpc.get("isUnique"), (String) currentNpc.get("genderIdentifier"));
+            npcs[i] = new npc(new int[]{i, Integer.valueOf(currentNpc.get("health").toString())}, (boolean) currentNpc.get("isUnique"), (String) currentNpc.get("genderIdentifier"), currentNpc.get("name").toString());
 
             if (currentNpc.get("inventory") != null) {
                 JSONArray currentNpcItems = (JSONArray) currentNpc.get("inventory");
@@ -161,8 +157,6 @@ public class Main {
                     npcs[i].giveDropItem(items[reverseItemMap.get(currentNpcDropItem.toString().toLowerCase())]);
                 }
             }
-
-            npcMap.put(i, currentNpc.get("name").toString());
             reverseNpcMap.put(currentNpc.get("name").toString().toLowerCase(), i);
         }
     }
@@ -172,7 +166,6 @@ public class Main {
 
         for (int i = 0; i < roomData.size(); i++) {
             JSONObject currentRoom = (JSONObject) roomData.get(i);
-            roomMap.put(i, currentRoom.get("name").toString());  //Inputs data into the HashMap roomMap
             reverseRoomMap.put(currentRoom.get("name").toString().toLowerCase(), i);
         }
 
@@ -184,14 +177,14 @@ public class Main {
 
             int[] tempDirections = new int[6];  //tempDirections contains the direction information for each room that is sent to each room
 
-            for (int b = 0; b < 6; b++) {
+            for (int b = 0; b < 6; b++) {   //Populates the tempDirections array with integers representing which room to visit
                 if (objectDirections.get(b).getClass().toString().equals("class java.lang.Long"))
                     tempDirections[b] = Integer.valueOf(objectDirections.get(b).toString());
                 else
                     tempDirections[b] = reverseRoomMap.get(objectDirections.get(b).toString().toLowerCase());
             }
 
-            rooms[i] = new room(i, tempDirections);  //Creates a new room with the given data
+            rooms[i] = new room(i, tempDirections, currentRoom.get("name").toString());  //Creates a new room with the given data
 
             if (objectItems != null)
                 for (Object currentItem : objectItems) {

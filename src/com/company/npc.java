@@ -11,7 +11,7 @@ import java.util.Set;
 public class npc {
     int number, maxHealth, health, damage = 0, mostPower = 0, mostPowerWep = 0;
 
-    String genderPossess;
+    String genderPossess, name;
 
     Set<Character> vowels = new HashSet<Character>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
@@ -20,12 +20,13 @@ public class npc {
 
     boolean alive = true, unique;
 
-    npc(int[] npcInfo, boolean givenUniqueness, String givenGenderPossess) {
+    npc(int[] npcInfo, boolean givenUniqueness, String givenGenderPossess, String givenName) {
         number = npcInfo[0];
         maxHealth = npcInfo[1];
         health = maxHealth;
         unique = givenUniqueness;
         genderPossess = givenGenderPossess;
+        name = givenName;
     }
 
     public void damage(int dmg) {
@@ -36,20 +37,20 @@ public class npc {
             if (!unique) {
                 System.out.print("the ");
             }
-            System.out.print(Main.npcMap.get(number));
+            System.out.print(name);
             if (itemDropList.size() > 0) {
                 if (!unique) {
-                    System.out.println("\nThe " + Main.npcMap.get(number) + " has dropped:");
+                    System.out.println("\nThe " + name + " has dropped:");
                 } else {
-                    System.out.println("\n" + Main.npcMap.get(number) + " has dropped:");
+                    System.out.println("\n" + name + " has dropped:");
                 }
                 for (item currentDropItem : itemDropList) {
                     if (!currentDropItem.isUnique()) {
-                        if (!vowels.contains(Character.toLowerCase(Main.itemMap.get(currentDropItem.getNum()).charAt(0)))) {
+                        if (!vowels.contains(Character.toLowerCase(currentDropItem.getName().charAt(0)))) {
                             System.out.print("A ");
                         } else System.out.print("An ");
                     }
-                    System.out.println(Main.itemMap.get(currentDropItem.getNum()));
+                    System.out.println(currentDropItem.getName());
                     Main.rooms[Main.john.getRoomNum()].giveItem(currentDropItem);
                 }
             }
@@ -59,6 +60,8 @@ public class npc {
     public String getGenderPosses() {
         return genderPossess;
     }
+
+    public String getName() { return name; }
 
     public void calculateMpWep() {
         for (item currentItem : hasItems) {
@@ -80,8 +83,10 @@ public class npc {
     }
 
     public String getWepName() {
-        return Main.itemMap.get(hasItems.get(mostPowerWep).getNum());
+        return hasItems.get(mostPowerWep).getName();
     }
+
+    public item getWep() { return hasItems.get(mostPowerWep);};
 
     public boolean isUnique() {
         return unique;
