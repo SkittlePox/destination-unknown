@@ -94,18 +94,30 @@ public class Main {
                         john.goTo(parsedCommand[1]);    //parsedCommand[x] is a String that will be a direction (ie: north) that is sent to player.goTo() for translating into a destination room number
                         break;
                     case "take":
-                        if (parsedCommand[1].equals("all")) john.takeAll();
-                        else if (parsedCommand[1].equals("the"))
-                            rooms[john.getRoomNum()].take(input.substring(9));  //Sends rest of command to take()
-                        else
-                            rooms[john.getRoomNum()].take(input.substring(5));  //Sends rest of command to take()
+                        switch (parsedCommand[1]) {
+                            case "all":
+                                john.takeAll();
+                                break;
+                            case "the":
+                                john.take(input.substring(9));  //Sends rest of command to take()
+                                break;
+                            default:
+                                john.take(input.substring(5));  //Sends rest of command to take()
+                                break;
+                        }
                         break;
                     case "drop":
-                        if (parsedCommand[1].equals("all")) john.dropAll();
-                        else if (parsedCommand[1].equals("the"))
-                            rooms[john.getRoomNum()].drop(input.substring(9));  //Sends rest of command to take()
-                        else
-                            rooms[john.getRoomNum()].drop(input.substring(5));  //Sends rest of command to take()
+                        switch (parsedCommand[1]) {
+                            case "all":
+                                john.dropAll();
+                                break;
+                            case "the":
+                                john.drop(input.substring(9));  //Sends rest of command to take()
+                                break;
+                            default:
+                                john.drop(input.substring(5));  //Sends rest of command to take()
+                                break;
+                        }
                         break;
                     case "kill":
                         if (parsedCommand[1].equals("the")) john.attack(input.substring(9));
@@ -140,13 +152,13 @@ public class Main {
             if (currentNpc.get("inventory") != null) {
                 JSONArray currentNpcItems = (JSONArray) currentNpc.get("inventory");
                 for (Object currentNpcItem : currentNpcItems) {
-                    npcs[i].giveItem(items[reverseItemMap.get(currentNpcItem.toString())]);
+                    npcs[i].giveItem(items[reverseItemMap.get(currentNpcItem.toString().toLowerCase())]);
                 }
             }
             if (currentNpc.get("drop") != null) {
                 JSONArray currentNpcDropItems = (JSONArray) currentNpc.get("drop");
                 for (Object currentNpcDropItem : currentNpcDropItems) {
-                    npcs[i].giveDropItem(items[reverseItemMap.get(currentNpcDropItem.toString())]);
+                    npcs[i].giveDropItem(items[reverseItemMap.get(currentNpcDropItem.toString().toLowerCase())]);
                 }
             }
 

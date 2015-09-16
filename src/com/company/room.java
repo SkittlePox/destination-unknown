@@ -29,30 +29,6 @@ public class room {
         npcPresent();
     }
 
-    public void take(String someItem) {
-        //System.out.println(Main.reverseItemMap.get(someItem));
-        try {
-            if (hasItems.contains(Main.items[Main.reverseItemMap.get(someItem)])) {
-                Main.john.addItem(Main.reverseItemMap.get(someItem));
-                hasItems.remove(Main.items[Main.reverseItemMap.get(someItem)]);
-            }
-        } catch (NullPointerException e) {
-            System.out.println("You can't take an item that is not here");
-        }
-        Main.john.calculateMpWep();
-        stay();
-    }
-
-    public void drop(String someItem) {
-        try {
-            hasItems.add(Main.items[Main.reverseItemMap.get(someItem)]);
-            Main.john.removeItem(Main.reverseItemMap.get(someItem));
-        } catch (NullPointerException e) {
-            System.out.println("You can't drop an item you do not have");
-        }
-        stay();
-    }
-
     public void stay() {
         System.out.println(Main.roomMap.get(roomNum));
         itemPresent();
@@ -104,7 +80,7 @@ public class room {
                         else System.out.print("An ");
                     }
                     if (currentNpc.getDamage() > 0) {   //If the npc does damage do some damage
-                        System.out.print(Main.npcMap.get(currentNpc.getNum()) + " attacks you with "+ currentNpc.getGenderPosses() + " " + currentNpc.getWepName() + "\n");
+                        System.out.print(Main.npcMap.get(currentNpc.getNum()) + " attacks you with " + currentNpc.getGenderPosses() + " " + currentNpc.getWepName() + "\n");
                         Main.john.takeDmg(currentNpc.getDamage());
                     } else
                         System.out.print(Main.npcMap.get(currentNpc.getNum()) + " is here\n"); //If not mention that it is here
@@ -123,10 +99,6 @@ public class room {
 
     public void giveNpc(npc newNpc) {
         hasNpcs.add(newNpc);
-    }
-
-    public int getRoomNum() {
-        return roomNum;
     }
 
     public int getDirs(int dir) {

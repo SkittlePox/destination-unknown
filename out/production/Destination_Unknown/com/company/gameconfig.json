@@ -22,7 +22,7 @@
         "knife"
       ],
       "npcs": [
-        "Troll"
+        "Papa John"
       ]
     },
     {
@@ -61,6 +61,11 @@
       "name": "axe",
       "damage": 5,
       "isUnique": false
+    },
+    {
+      "name": "Excalibur",
+      "damage": 100,
+      "isUnique": true
     }
   ],
   "npcs": [
@@ -68,7 +73,6 @@
       "name": "Troll",
       "health": 10,
       "genderIdentifier": "his",
-      "startingRoomNum": 1,
       "inventory": [
         "axe"
       ],
@@ -76,6 +80,18 @@
         "axe"
       ],
       "isUnique": false
+    },
+    {
+      "name": "Papa John",
+      "health": 5,
+      "genderIdentifier": "his",
+      "inventory": [
+        "Excalibur"
+      ]
+      "drop": [
+        "Excalibur"
+      ],
+      "isUnique": true
     }
   ]
 }
