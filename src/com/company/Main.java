@@ -175,7 +175,7 @@ public class Main {
         for (int i = 0; i < roomData.size(); i++) {
             JSONObject currentRoom = (JSONObject) roomData.get(i);
             JSONArray objectDirections = (JSONArray) currentRoom.get("directions");
-            JSONArray objectItems = (JSONArray) currentRoom.get("hasItems");
+            JSONArray objectItems = (JSONArray) currentRoom.get("items");
             JSONArray objectNpcs = (JSONArray) currentRoom.get("npcs");
 
             int[] tempDirections = new int[6];  //tempDirections contains the direction information for each room that is sent to each room

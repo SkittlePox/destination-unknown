@@ -64,7 +64,7 @@
     },
     {
       "name": "Excalibur",
-      "damage": 100,
+      "damage": 5,
       "isUnique": true
     }
   ],

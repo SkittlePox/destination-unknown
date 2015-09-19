@@ -64,13 +64,8 @@
     },
     {
       "name": "Excalibur",
-      "damage": 100,
+      "damage": 5,
       "isUnique": true
-    },
-    {
-      "name": "Health Potion",
-      "heal": 10,
-      "isUnique": false
     }
   ],
   "npcs": [
