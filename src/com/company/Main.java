@@ -86,6 +86,7 @@ public class Main {
                 break;
 
             default:
+                String tempCommand = "";
                 switch (parsedCommand[0]) {
                     case "go":
                         john.goTo(parsedCommand[1]);    //parsedCommand[x] is a String that will be a direction (ie: north) that is sent to player.goTo() for translating into a destination room number
@@ -96,10 +97,16 @@ public class Main {
                                 john.takeAll();
                                 break;
                             case "the":
-                                john.take(input.substring(9));  //Sends rest of command to take()
+                                for (int x = 2; x < parsedCommand.length; x++) {
+                                    tempCommand = tempCommand.concat(" " + parsedCommand[x]);
+                                }
+                                john.take(tempCommand.substring(1));  //Sends command to take()
                                 break;
                             default:
-                                john.take(input.substring(5));  //Sends rest of command to take()
+                                for (int x = 1; x < parsedCommand.length; x++) {
+                                    tempCommand = tempCommand.concat(" " + parsedCommand[x]);
+                                }
+                                john.take(tempCommand.substring(1));  //Sends command to take()
                                 break;
                         }
                         break;
@@ -109,16 +116,32 @@ public class Main {
                                 john.dropAll();
                                 break;
                             case "the":
-                                john.drop(input.substring(9));  //Sends rest of command to take()
+                                for (int x = 2; x < parsedCommand.length; x++) {
+                                    tempCommand = tempCommand.concat(" " + parsedCommand[x]);
+                                }
+                                john.drop(tempCommand.substring(1));
                                 break;
                             default:
-                                john.drop(input.substring(5));  //Sends rest of command to take()
+                                for (int x = 1; x < parsedCommand.length; x++) {
+                                    tempCommand = tempCommand.concat(" " + parsedCommand[x]);
+                                }
+                                john.drop(tempCommand.substring(1));
                                 break;
                         }
                         break;
                     case "kill":
-                        if (parsedCommand[1].equals("the")) john.attack(input.substring(9));
-                        else john.attack(input.substring(5));
+                        if (parsedCommand[1].equals("the")) {
+                            for (int x = 2; x < parsedCommand.length; x++) {
+                                tempCommand = tempCommand.concat(" " + parsedCommand[x]);
+                            }
+                            john.attack(tempCommand.substring(1));
+                        }
+                        else {
+                            for (int x = 1; x < parsedCommand.length; x++) {
+                                tempCommand = tempCommand.concat(" " + parsedCommand[x]);
+                            }
+                            john.attack(tempCommand.substring(1));
+                        }
                         break;
                     default:
                         john.goTo(parsedCommand[0]);
@@ -135,8 +158,8 @@ public class Main {
             JSONObject currentItem = (JSONObject) itemData.get(i);
             try {
                 items[i] = new item(new int[]{i, Integer.valueOf(currentItem.get("damage").toString()), 0}, (boolean) currentItem.get("isUnique"), currentItem.get("name").toString());  //Creates a new item with the given data
+            } catch (NullPointerException e) {
             }
-            catch (NullPointerException e){}
             checkItemMap.put(currentItem.get("name").toString().toLowerCase(), i);
         }
     }

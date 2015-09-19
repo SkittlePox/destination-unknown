@@ -54,7 +54,7 @@
   "items": [
     {
       "name": "knife",
-      "damage": 10,
+      "damage": 100,
       "isUnique": false
     },
     {
