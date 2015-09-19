@@ -133,8 +133,11 @@ public class Main {
 
         for (int i = 0; i != itemData.size(); i++) {
             JSONObject currentItem = (JSONObject) itemData.get(i);
-            if (currentItem != null) 
-                items[i] = new item(new int[]{i, Integer.valueOf(currentItem.get("damage").toString()), 0}, (boolean) currentItem.get("isUnique"), currentItem.get("name").toString());  //Creates a new item with the given data
+            //If name is null, skips over item
+            if (currentItem.get("name") == null)
+                continue;
+            //                               If damage is not missing        then use the damage value                else default value 0      If isUnique is not missing         then use isUnique value             else default value false
+            items[i] = new item(new int[]{i, currentItem.get("damage") != null ? Integer.valueOf(currentItem.get("damage").toString()) : 0, 0}, currentItem.get("isUnique") != null ? (boolean) currentItem.get("isUnique") : false, currentItem.get("name").toString());  //Creates a new item with the given data
             checkItemMap.put(currentItem.get("name").toString().toLowerCase(), i);
         }
     }
