@@ -133,10 +133,8 @@ public class Main {
 
         for (int i = 0; i != itemData.size(); i++) {
             JSONObject currentItem = (JSONObject) itemData.get(i);
-            try {
+            if (currentItem != null) 
                 items[i] = new item(new int[]{i, Integer.valueOf(currentItem.get("damage").toString()), 0}, (boolean) currentItem.get("isUnique"), currentItem.get("name").toString());  //Creates a new item with the given data
-            }
-            catch (NullPointerException e){}
             checkItemMap.put(currentItem.get("name").toString().toLowerCase(), i);
         }
     }
