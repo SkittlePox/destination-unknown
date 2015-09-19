@@ -156,10 +156,18 @@ public class Main {
 
         for (int i = 0; i != itemData.size(); i++) {
             JSONObject currentItem = (JSONObject) itemData.get(i);
+<<<<<<< HEAD
             try {
                 items[i] = new item(new int[]{i, Integer.valueOf(currentItem.get("damage").toString()), 0}, (boolean) currentItem.get("isUnique"), currentItem.get("name").toString());  //Creates a new item with the given data
             } catch (NullPointerException e) {
             }
+=======
+            //If name is null, skips over item
+            if (currentItem.get("name") == null)
+                continue;
+            //                               If damage is not missing        then use the damage value                else default value 0      If isUnique is not missing         then use isUnique value             else default value false
+            items[i] = new item(new int[]{i, currentItem.get("damage") != null ? Integer.valueOf(currentItem.get("damage").toString()) : 0, 0}, currentItem.get("isUnique") != null ? (boolean) currentItem.get("isUnique") : false, currentItem.get("name").toString());  //Creates a new item with the given data
+>>>>>>> 1874bf7fbe42671eff6251a2db3a5d3434ec6b4f
             checkItemMap.put(currentItem.get("name").toString().toLowerCase(), i);
         }
     }
