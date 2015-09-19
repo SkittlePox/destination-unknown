@@ -92,7 +92,12 @@ public class Main {
                         john.goTo(parsedCommand[1]);    //parsedCommand[x] is a String that will be a direction (ie: north) that is sent to player.goTo() for translating into a destination room number
                         break;
                     case "use":
-                        john.useItem(parsedCommand[1]);
+                        if (parsedCommand.length > 1) {
+                            for (int x = 1; x < parsedCommand.length; x++) {
+                                tempCommand = tempCommand.concat(" " + parsedCommand[x]);
+                            }
+                            john.useItem(tempCommand.substring(1));
+                        }
                         break;
                     case "take":
                         switch (parsedCommand[1]) {
