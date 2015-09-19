@@ -26,6 +26,21 @@ public class player {
         hasItems.remove(Main.items[itemNum]);
     }
 
+    public void useItem(String name) {
+        int remove = -1;
+        for (item it : hasItems) {
+            if (it.getName().equals(name)) {
+                health += it.getHeal();
+                health = health > maxHealth ? maxHealth : health;
+                System.out.println("You have healed from " + name);
+                remove = hasItems.indexOf(it);
+                break;
+            }
+        }
+        if (remove != -1)
+            hasItems.remove(remove);
+    }
+
     public void goTo(String someDir) {  //From the direction name to the destination room number
         switch (someDir) {
             case "n":

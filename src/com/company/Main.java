@@ -91,6 +91,9 @@ public class Main {
                     case "go":
                         john.goTo(parsedCommand[1]);    //parsedCommand[x] is a String that will be a direction (ie: north) that is sent to player.goTo() for translating into a destination room number
                         break;
+                    case "use":
+                        john.useItem(parsedCommand[1]);
+                        break;
                     case "take":
                         switch (parsedCommand[1]) {
                             case "all":
@@ -160,7 +163,7 @@ public class Main {
             if (currentItem.get("name") == null)
                 continue;
             //                               If damage is not missing        then use the damage value                else default value 0      If isUnique is not missing         then use isUnique value             else default value false
-            items[i] = new item(new int[]{i, currentItem.get("damage") != null ? Integer.valueOf(currentItem.get("damage").toString()) : 0, 0}, currentItem.get("isUnique") != null ? (boolean) currentItem.get("isUnique") : false, currentItem.get("name").toString());  //Creates a new item with the given data
+            items[i] = new item(new int[]{i, currentItem.get("damage") != null ? Integer.valueOf(currentItem.get("damage").toString()) : 0, currentItem.get("heal") != null ? Integer.valueOf(currentItem.get("heal").toString()) : 0, 0}, currentItem.get("isUnique") != null ? (boolean) currentItem.get("isUnique") : false, currentItem.get("name").toString());  //Creates a new item with the given data
             checkItemMap.put(currentItem.get("name").toString().toLowerCase(), i);
         }
     }

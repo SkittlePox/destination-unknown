@@ -4,7 +4,7 @@ package com.company;
  * Created by Benjamin on 9/5/15.
  */
 public class item {
-    int number, damage, weight;
+    int number, damage, weight, heal;
 
     boolean unique;
 
@@ -13,7 +13,8 @@ public class item {
     item(int[] givInfo, boolean givenUniqueness, String givenName) {
         number = givInfo[0];
         damage = givInfo[1];
-        weight = givInfo[2];
+        heal = givInfo[2];
+        weight = givInfo[3];
         unique = givenUniqueness;
         name = givenName;
     }
@@ -32,6 +33,10 @@ public class item {
 
     public int getDamage() {
         return damage;
+    }
+
+    public int getHeal() {
+        return heal;
     }
 
     public int getWeight() {
