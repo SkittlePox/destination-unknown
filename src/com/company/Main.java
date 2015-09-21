@@ -92,12 +92,16 @@ public class Main {
                         john.goTo(parsedCommand[1]);    //parsedCommand[x] is a String that will be a direction (ie: north) that is sent to player.goTo() for translating into a destination room number
                         break;
                     case "use":
-                        if (parsedCommand.length > 1) {
+                        if (parsedCommand[1].equals("the")) {
+                            for (int x = 2; x < parsedCommand.length; x++) {
+                                tempCommand = tempCommand.concat(" " + parsedCommand[x]);
+                            }
+                        } else {
                             for (int x = 1; x < parsedCommand.length; x++) {
                                 tempCommand = tempCommand.concat(" " + parsedCommand[x]);
                             }
-                            john.useItem(tempCommand.substring(1));
                         }
+                        john.useItem(tempCommand.substring(1));
                         break;
                     case "take":
                         switch (parsedCommand[1]) {
@@ -143,8 +147,7 @@ public class Main {
                                 tempCommand = tempCommand.concat(" " + parsedCommand[x]);
                             }
                             john.attack(tempCommand.substring(1));
-                        }
-                        else {
+                        } else {
                             for (int x = 1; x < parsedCommand.length; x++) {
                                 tempCommand = tempCommand.concat(" " + parsedCommand[x]);
                             }
@@ -178,7 +181,10 @@ public class Main {
 
         for (int i = 0; i != npcData.size(); i++) {
             JSONObject currentNpc = (JSONObject) npcData.get(i);
-            npcs[i] = new npc(new int[]{i, Integer.valueOf(currentNpc.get("health").toString())}, (boolean) currentNpc.get("isUnique"), (String) currentNpc.get("genderIdentifier"), currentNpc.get("name").toString());
+            String deathSound = "You have slain";
+            if (currentNpc.get("onKill") != null) deathSound = currentNpc.get("onKill").toString();
+
+            npcs[i] = new npc(new int[]{i, Integer.valueOf(currentNpc.get("health").toString())}, (boolean) currentNpc.get("isUnique"), (String) currentNpc.get("genderIdentifier"), currentNpc.get("name").toString(), deathSound);
 
             if (currentNpc.get("inventory") != null) {
                 JSONArray currentNpcItems = (JSONArray) currentNpc.get("inventory");

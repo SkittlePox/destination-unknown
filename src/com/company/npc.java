@@ -11,7 +11,7 @@ import java.util.Set;
 public class npc {
     int number, maxHealth, health, damage = 0, mostPower = 0, mostPowerWep = 0;
 
-    String genderPossess, name;
+    String genderPossess, name, killSound;
 
     Set<Character> vowels = new HashSet<Character>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
@@ -20,30 +20,28 @@ public class npc {
 
     boolean alive = true, unique;
 
-    npc(int[] npcInfo, boolean givenUniqueness, String givenGenderPossess, String givenName) {
+    npc(int[] npcInfo, boolean givenUniqueness, String givenGenderPossess, String givenName, String givenKill) {
         number = npcInfo[0];
         maxHealth = npcInfo[1];
         health = maxHealth;
         unique = givenUniqueness;
         genderPossess = givenGenderPossess;
         name = givenName;
+        killSound = givenKill;
     }
 
     public void damage(int dmg) {
         health -= dmg;
         if (health <= 0) {
             alive = false;
-            System.out.print("You have slain ");
+            System.out.print(killSound + " ");
             if (!unique) {
                 System.out.print("the ");
             }
-            System.out.print(name);
+            System.out.print(name + "\n");
             if (itemDropList.size() > 0) {
-                if (!unique) {
-                    System.out.println("\nThe " + name + " has dropped:");
-                } else {
-                    System.out.println("\n" + name + " has dropped:");
-                }
+                if (!unique) System.out.print("The");
+                System.out.print(name + " has dropped:\n");
                 for (item currentDropItem : itemDropList) {
                     if (!currentDropItem.isUnique()) {
                         if (!vowels.contains(Character.toLowerCase(currentDropItem.getName().charAt(0)))) {
@@ -61,7 +59,9 @@ public class npc {
         return genderPossess;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     public void calculateMpWep() {
         for (item currentItem : hasItems) {
@@ -86,7 +86,11 @@ public class npc {
         return hasItems.get(mostPowerWep).getName();
     }
 
-    public item getWep() { return hasItems.get(mostPowerWep);};
+    public item getWep() {
+        return hasItems.get(mostPowerWep);
+    }
+
+    ;
 
     public boolean isUnique() {
         return unique;

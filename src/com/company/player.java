@@ -27,18 +27,20 @@ public class player {
     }
 
     public void useItem(String name) {
-        int remove = -1;
-        for (item it : hasItems) {
-            if (it.getName().equals(name)) {
-                health += it.getHeal();
+        int removeIndex = -1;
+        for (item currentItem : hasItems) {
+            if (currentItem.getName().equals(name)) {
+                health += currentItem.getHeal();
                 health = health > maxHealth ? maxHealth : health;
-                System.out.println("You have healed from " + name);
-                remove = hasItems.indexOf(it);
+                System.out.print("You have healed from ");
+                if(!currentItem.isUnique()) System.out.print("the ");
+                System.out.print(currentItem.getName() + "\n");
+                removeIndex = hasItems.indexOf(currentItem);
                 break;
             }
         }
-        if (remove != -1)
-            hasItems.remove(remove);
+        if (removeIndex != -1)
+            hasItems.remove(removeIndex);
     }
 
     public void goTo(String someDir) {  //From the direction name to the destination room number

@@ -4,7 +4,8 @@
     "health": 20,
     "startingRoomNum": 0,
     "inventory": [
-      "knife"
+      "knife",
+      "health pot"
     ]
   },
   "rooms": [
@@ -55,7 +56,6 @@
     {
       "name": "knife",
       "damage": 100,
-      "heal": 10,
       "isUnique": false
     },
     {
@@ -67,6 +67,11 @@
       "name": "Excalibur",
       "damage": 5,
       "isUnique": true
+    },
+    {
+      "name": "health pot",
+      "heal": 5,
+      "isUnique": false
     }
   ],
   "npcs": [
@@ -74,6 +79,7 @@
       "name": "Troll",
       "health": 10,
       "genderIdentifier": "his",
+      "onKill": "You have slain",
       "inventory": [
         "axe"
       ],
@@ -84,8 +90,9 @@
     },
     {
       "name": "Papa John",
-      "health": 100,
+      "health": 10,
       "genderIdentifier": "his",
+      "onKill": "You have killed",
       "inventory": [
         "Excalibur"
       ],
