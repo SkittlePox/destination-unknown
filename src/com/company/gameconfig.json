@@ -30,7 +30,7 @@
       "name": "Room 1",
       "directions": [
         0,
-        1,
+        "this",
         2,
         1,
         2,

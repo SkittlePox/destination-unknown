@@ -221,8 +221,11 @@ public class Main {
             for (int b = 0; b < 6; b++) {   //Populates the tempDirections array with integers representing which room to visit
                 if (objectDirections.get(b).getClass().toString().equals("class java.lang.Long"))
                     tempDirections[b] = Integer.valueOf(objectDirections.get(b).toString());
-                else
-                    tempDirections[b] = checkRoomMap.get(objectDirections.get(b).toString().toLowerCase());
+                else {
+                    if (objectDirections.get(b).toString().equalsIgnoreCase("this"))
+                        tempDirections[b] = checkRoomMap.get(currentRoom.get("name").toString().toLowerCase());
+                    else tempDirections[b] = checkRoomMap.get(objectDirections.get(b).toString().toLowerCase());
+                }
             }
 
             rooms[i] = new room(i, tempDirections, currentRoom.get("name").toString());  //Creates a new room with the given data

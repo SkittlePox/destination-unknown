@@ -29,11 +29,11 @@ public class player {
     public void useItem(String name) {
         int removeIndex = -1;
         for (item currentItem : hasItems) {
-            if (currentItem.getName().equals(name)) {
+            if (currentItem.getName().equals(name) && currentItem.getHeal() > 0) {
                 health += currentItem.getHeal();
                 health = health > maxHealth ? maxHealth : health;
                 System.out.print("You have healed from ");
-                if(!currentItem.isUnique()) System.out.print("the ");
+                if (!currentItem.isUnique()) System.out.print("the ");
                 System.out.print(currentItem.getName() + "\n");
                 removeIndex = hasItems.indexOf(currentItem);
                 break;
