@@ -87,7 +87,7 @@ public class Main {
                 break;
             case 1:
                 switch (parsedCommand[0]) {
-                    case "syntax":
+                    case "help":
                         System.out.println("To navigate this world, you may move in 6 directions:\nnorth\nsouth\neast\nwest\nup\ndown");
                         System.out.println("You may type 'north', 'n', 'go north', 'go n' to go north for example");
                         break;
@@ -97,7 +97,7 @@ public class Main {
                         break;
                     case "l":
                     case "look":
-                        rooms[john.getRoomNum()].stay();
+                        rooms[john.getRoomNum()].lookStay();
                         break;
                     case "quit":
                     case "exit":
@@ -252,7 +252,7 @@ public class Main {
                 }
             }
 
-            rooms[i] = new room(i, tempDirections, currentRoom.get("name").toString());  //Creates a new room with the given data
+            rooms[i] = new room(i, tempDirections, currentRoom.get("name").toString(), currentRoom.get("description") != null ? currentRoom.get("description").toString() : "");  //Creates a new room with the given data
 
             if (objectItems != null)
                 for (Object currentItem : objectItems) {

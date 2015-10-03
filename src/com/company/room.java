@@ -14,26 +14,35 @@ public class room {
     int roomNum, timesVisited = 0;
     int[] directions = new int[6];  //Each int in this array = a room number to travel to
 
-    String name;
+    String name, description;
 
     ArrayList<item> hasItems = new ArrayList<item>();
     ArrayList<npc> hasNpcs = new ArrayList<npc>();
 
-    public room(int rnum, int[] sentDirs, String givenName) {   //Initializer, assigns a room name and number
+    public room(int rnum, int[] sentDirs, String givenName, String givenVisit) {   //Initializer, assigns a room name and number
         roomNum = rnum;
         directions = sentDirs;
         name = givenName;
+        description = givenVisit;
     }
 
     public void visit() {
         timesVisited++;
         System.out.println(name);
+        if (timesVisited == 1 && !description.equals("")) System.out.println(description);
         itemPresent();
         npcPresent();
     }
 
     public void stay() {
         System.out.println(name);
+        itemPresent();
+        npcAttack();
+    }
+
+    public void lookStay() {
+        System.out.println(name);
+        System.out.println(description);
         itemPresent();
         npcAttack();
     }

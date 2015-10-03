@@ -11,6 +11,7 @@
   "rooms": [
     {
       "name": "Room 0",
+      "description": "Just a room",
       "directions": [
         "Room 1",
         1,
