@@ -31,7 +31,12 @@ public class Main {
     static String[] parsedCommand;
 
     public static void main(String[] args) throws Throwable {
-        configReader = new FileReader(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/gameconfig.json");
+        try {
+            configReader = new FileReader(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/gameconfig.json");
+        }
+        catch(java.io.FileNotFoundException e) {
+            configReader = new FileReader("./gameconfig.json");
+        }
         JSONParser jsonParser = new JSONParser();
         JSONObject file = (JSONObject) jsonParser.parse(configReader);
 
