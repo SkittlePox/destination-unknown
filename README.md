@@ -1,8 +1,8 @@
 #Destination Unknown
-A text adventure framework.
+A text adventure creation engine.
 Now you can make a text adventure **without knowing a programming language!**
 
-###How it works
-Destination Unknown takes a JSON file containing all of the text adventure data and compiles it into an actual world you can move around in.
-
 ###How to use it
+The engine reads information through a json file titled `gameconfig.json` which needs to be in the same directory as the core jar file.
+
+It would help to learn the [json format](http://www.w3schools.com/json/), else you can look at the default config file and see get the jist of it.
