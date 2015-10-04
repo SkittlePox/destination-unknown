@@ -7,7 +7,13 @@ The engine reads information through a json file titled `gameconfig.json` which 
 
 It would help to learn the [json format](http://www.w3schools.com/json/), else you can look at the default config file and see get the jist of it.
 
-#####Things you can customize in the JSON
+**The files that pertain to the creation of the text adventure are located in `out/artifacts/Destination_Unknown_jar/`**
+
+**If you just want to make a text adventure, those are the only files you have to worry about**
+
+Just move them into a separate foler and run one of the `run` scripts.
+
+####Things you can customize in the JSON
 * Player
  * Max health
  * Starting health
