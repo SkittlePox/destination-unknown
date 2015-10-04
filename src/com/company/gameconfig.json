@@ -2,7 +2,7 @@
   "player": {
     "maxHealth": 20,
     "health": 20,
-    "startingRoomNum": 0,
+    "startingRoom": "Room 0",
     "inventory": [
       "knife",
       "health pot"

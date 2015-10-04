@@ -266,7 +266,7 @@ public class Main {
     }
 
     static void createPlayer() {
-        john = new player(new int[]{Integer.valueOf(playerData.get("maxHealth").toString()), Integer.valueOf(playerData.get("health").toString()), Integer.valueOf(playerData.get("startingRoomNum").toString())});
+        john = new player(new int[]{Integer.valueOf(playerData.get("maxHealth").toString()), Integer.valueOf(playerData.get("health").toString()), checkRoomMap.get(playerData.get("startingRoom").toString().toLowerCase())});
 
         if (playerData.get("inventory") != null) {
             JSONArray playerItems = (JSONArray) playerData.get("inventory");
