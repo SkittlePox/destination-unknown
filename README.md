@@ -7,7 +7,7 @@ The engine reads information through a json file titled `gameconfig.json` which 
 
 It would help to learn the [json format](http://www.w3schools.com/json/), else you can look at the default config file and see get the jist of it.
 
-#####Things you can customize
+#####Things you can customize in the JSON
 * Player
  * Max health
  * Starting health
