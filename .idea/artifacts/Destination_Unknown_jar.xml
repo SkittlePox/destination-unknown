@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="Destination_Unknown:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/Destination_Unknown_jar</output-path>
-    <root id="archive" name="Destination_Unknown.jar">
-      <element id="module-output" name="Destination_Unknown" />
-      <element id="extracted-dir" path="/Library/Java/Extensions/json-simple-1.1.1.jar" path-in-jar="/" />
-    </root>
-  </artifact>
-</component>

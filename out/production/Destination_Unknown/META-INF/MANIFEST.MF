@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: Destination_Unknown/src/com/company/
-Main-Class: com.company.Main
-
