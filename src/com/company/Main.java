@@ -33,8 +33,7 @@ public class Main {
     public static void main(String[] args) throws Throwable {
         try {
             configReader = new FileReader(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/company/gameconfig.json");
-        }
-        catch(java.io.FileNotFoundException e) {
+        } catch (java.io.FileNotFoundException e) {
             configReader = new FileReader("./gameconfig.json");
         }
         JSONParser jsonParser = new JSONParser();
@@ -236,20 +235,16 @@ public class Main {
 
         for (int i = 0; i < roomData.size(); i++) {
             JSONObject currentRoom = (JSONObject) roomData.get(i);
-            JSONArray objectDirections = (JSONArray) currentRoom.get("directions");
             JSONArray objectItems = (JSONArray) currentRoom.get("items");
             JSONArray objectNpcs = (JSONArray) currentRoom.get("npcs");
 
             int[] tempDirections = new int[6];  //tempDirections contains the direction information for each room that is sent to each room
+            String[] dirNames = {"north", "south", "east", "west", "up", "down"};
 
-            for (int b = 0; b < 6; b++) {   //Populates the tempDirections array with integers representing which room to visit
-                if (objectDirections.get(b).getClass().toString().equals("class java.lang.Long"))
-                    tempDirections[b] = Integer.valueOf(objectDirections.get(b).toString());
-                else {
-                    if (objectDirections.get(b).toString().equalsIgnoreCase("this"))
-                        tempDirections[b] = checkRoomMap.get(currentRoom.get("name").toString().toLowerCase());
-                    else tempDirections[b] = checkRoomMap.get(objectDirections.get(b).toString().toLowerCase());
-                }
+            for (int q = 0; q < 6; q++) {
+                if (currentRoom.containsKey(dirNames[q]) && checkRoomMap.containsKey(currentRoom.get(dirNames[q]).toString().toLowerCase())) {
+                    tempDirections[q] = checkRoomMap.get(currentRoom.get(dirNames[q]).toString().toLowerCase());
+                } else tempDirections[q] = i;
             }
 
             rooms[i] = new room(i, tempDirections, currentRoom.get("name").toString(), currentRoom.get("description") != null ? currentRoom.get("description").toString() : "");  //Creates a new room with the given data

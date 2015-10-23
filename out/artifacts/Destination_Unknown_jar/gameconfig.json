@@ -12,14 +12,8 @@
     {
       "name": "Room 0",
       "description": "Just a room",
-      "directions": [
-        "Room 1",
-        1,
-        2,
-        1,
-        2,
-        1
-      ],
+      "north": "Room 2",
+      "south": "Room 1",
       "items": [
         "knife"
       ],
@@ -29,25 +23,11 @@
     },
     {
       "name": "Room 1",
-      "directions": [
-        0,
-        "this",
-        2,
-        1,
-        2,
-        1
-      ]
+      "south": "Room 0"
     },
     {
       "name": "Room 2",
-      "directions": [
-        0,
-        1,
-        2,
-        1,
-        2,
-        1
-      ],
+      "north": "Room 1",
       "npcs": [
         "Troll"
       ]
