@@ -5,9 +5,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Benjamin on 9/4/15.
- */
 public class room {
     Set<Character> vowels = new HashSet<Character>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
@@ -18,6 +15,7 @@ public class room {
 
     ArrayList<item> hasItems = new ArrayList<item>();
     ArrayList<npc> hasNpcs = new ArrayList<npc>();
+    ArrayList<event> hasEvents = new ArrayList<event>();
 
     public room(int rnum, int[] sentDirs, String givenName, String givenVisit) {   //Initializer, assigns a room name and number
         roomNum = rnum;
@@ -27,24 +25,25 @@ public class room {
     }
 
     public void visit() {
-        timesVisited++;
-        System.out.println(name);
-        if (timesVisited == 1 && !description.equals("")) System.out.println(description);
-        itemPresent();
-        npcPresent();
+        if (timesVisited == 0) {
+            if (description.equals("")) System.out.println(name);
+            else System.out.println(description);    //First visit case
+            npcPresent();
+            itemPresent();
+            timesVisited++;
+        } else {
+            System.out.println(name);
+            npcPresent();
+            itemPresent();
+            if (Main.john.lastRoom == Main.john.currentRoom) npcAttack();
+            else timesVisited++;
+        }
     }
 
-    public void stay() {
-        System.out.println(name);
-        itemPresent();
-        npcAttack();
-    }
-
-    public void lookStay() {
-        System.out.println(name);
+    public void look() {
         System.out.println(description);
+        npcPresent();
         itemPresent();
-        npcAttack();
     }
 
     public void itemPresent() {
@@ -76,6 +75,14 @@ public class room {
                     }
                     System.out.print(currentNpc.getName() + " is here\n");
                 }
+            }
+        }
+    }
+
+    public void eventPresent() {
+        if (!hasEvents.isEmpty()) {
+            for (event currentEvent : hasEvents) {
+                currentEvent.test();
             }
         }
     }
@@ -114,6 +121,10 @@ public class room {
 
     public void giveNpc(npc newNpc) {
         hasNpcs.add(newNpc);
+    }
+
+    public void giveEvent(event newEvent) {
+        hasEvents.add(newEvent);
     }
 
     public int getDirs(int dir) {

@@ -5,9 +5,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Benjamin on 9/6/15.
- */
 public class npc {
     int number, maxHealth, health, damage = 0, mostPower = 0, mostPowerWep = 0;
 

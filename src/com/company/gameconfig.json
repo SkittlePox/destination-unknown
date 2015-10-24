@@ -4,7 +4,6 @@
     "health": 20,
     "startingRoom": "Room 0",
     "inventory": [
-      "knife",
       "health pot"
     ]
   },

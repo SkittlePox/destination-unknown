@@ -44,8 +44,6 @@ public class Main {
         npcData = (JSONArray) file.get("npcs");
         roomData = (JSONArray) file.get("rooms");
 
-//        randGen();
-
         popItems();
         popNpcs();
         popRooms();
@@ -58,30 +56,13 @@ public class Main {
         }
     }
 
-//    static void randGen() {
-//        int randRooms = (int) (Math.random() * 8) + 1;
-//        rooms = new room[randRooms];
-//
-//        for (int x = 0; x < randRooms; x++) {
-//            checkRoomMap.put("room " + x, x);
-//            int[] tempDirections = new int[6];  //tempDirections contains the direction information for each room that is sent to each room
-//            for (int i = 0; i < 6; i++) {
-//                tempDirections[i] = (int) (Math.random() * randRooms - 1);
-//                System.out.println(tempDirections[i]);
-//            }
-//            rooms[x] = new room(x, tempDirections, "Room " + x);  //Creates a new room with the given data
-//        }
-//
-//        john = new player(new int[]{50, 50, 0});
-//    }
-
     static void parse() {   //The body of the UI
+        System.out.print("> ");
         input = scan.nextLine().toLowerCase();    //Sets a String to the input command
         parsedCommand = input.split("[ ]+");    //Splits that String into a String array so you can examine each word in the input
 
         switch (parsedCommand.length) {
             case 0:
-                rooms[john.getRoomNum()].stay();
                 parse();
                 break;
             case 1:
@@ -96,7 +77,7 @@ public class Main {
                         break;
                     case "l":
                     case "look":
-                        rooms[john.getRoomNum()].lookStay();
+                        rooms[john.getRoomNum()].look();
                         break;
                     case "quit":
                     case "exit":
@@ -165,6 +146,7 @@ public class Main {
                         }
                         break;
                     case "kill":
+                    case "attack":
                         if (parsedCommand[1].equals("the")) {
                             for (int x = 2; x < parsedCommand.length; x++) {
                                 tempCommand = tempCommand.concat(" " + parsedCommand[x]);
