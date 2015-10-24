@@ -19,20 +19,21 @@ Just move them into a separate foler and run one of the `run` scripts.
  * Starting health
  * Starting Room
  * Inventory
-* Non Player Characters
+* Non Player Characters (NPCs)
  * Name
- * Unique or not (Mario vs A Mario)
+ * Unique or not (The difference between 'Mario' and 'A Mario')
  * Health
  * Gender
- * inventory
+ * Inventory
  * Items that drop when killed
 * Items
  * Name
  * Damage
  * Returned Health on consumption
- * Unique or not
+ * Unique or not (explained within NPCs)
 * Rooms
  * Name
  * Description (Printed on first visit of room and when the player 'look's)
+ * Directions from room ('north' goes to Room x)
  * Items in room
  * NPCs in room 
